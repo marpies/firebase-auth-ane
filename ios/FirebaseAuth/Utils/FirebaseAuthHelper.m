@@ -67,6 +67,15 @@
     [[FIRAuth auth] signInWithCredential:credential completion:completion];
 }
 
+- (BOOL) signOut {
+    NSError *error;
+    [[FIRAuth auth] signOut:&error];
+    if( error == nil ) {
+        return YES;
+    }
+    return NO;
+}
+
 - (NSString*) getJSONFromUser:(FIRUser*) newUser {
     FIRUser* user = (newUser == nil) ? [self getUser] : newUser;
     if( user != nil ) {

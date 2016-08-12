@@ -28,6 +28,8 @@
 - (void) signInWithGoogleAccount:(nonnull NSString*) idToken accessToken:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion ;
 - (void) signInWithFacebookAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
 
+- (BOOL) signOut;
+
 - (nullable NSString*) getJSONFromUser:(nullable FIRUser*) user;
 
 @end
