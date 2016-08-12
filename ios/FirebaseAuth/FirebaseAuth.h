@@ -16,9 +16,13 @@
 
 #import <AIRExtHelpers/FlashRuntimeExtensions.h>
 #import <Foundation/Foundation.h>
+#import "FirebaseAuthHelper.h"
 
 @interface FirebaseAuth : NSObject
 
+@property (nullable, nonatomic) FirebaseAuthHelper* helper;
+
++ (nonnull id) sharedInstance;
 + (void) dispatchEvent:(nullable const NSString*) eventName;
 + (void) dispatchEvent:(nullable const NSString*) eventName withMessage:(nonnull NSString*) message;
 + (void) log:(nullable const NSString*) message;

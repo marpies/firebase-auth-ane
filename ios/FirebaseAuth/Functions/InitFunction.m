@@ -15,10 +15,18 @@
  */
 
 #import "FirebaseAuth.h"
+#import "FirebaseAuthHelper.h"
 #import "InitFunction.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
 
 FREObject fba_init( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
+    /* Already initialized */
+    if( [[FirebaseAuth sharedInstance] helper] != nil ) return nil;
+    
+    BOOL showLogs = [MPFREObjectUtils getBOOL:argv[0]];
+    [FirebaseAuth showLogs:showLogs];
+    [FirebaseAuth log:@"FirebaseAuth::fba_init"];
+    [[FirebaseAuth sharedInstance] setHelper:[[FirebaseAuthHelper alloc] init]];
     
     return nil;
 }

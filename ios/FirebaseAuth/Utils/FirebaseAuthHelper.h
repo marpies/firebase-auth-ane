@@ -15,7 +15,15 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 @interface FirebaseAuthHelper : NSObject
+
+- (void) createUserWithEmail:(nonnull NSString*) email password:(nonnull NSString *)password completion:(nullable FIRAuthResultCallback)completion;
+
+- (void) signInAnonymouslyWithCompletion:(nullable FIRAuthResultCallback) completion;
+- (void) signInWithEmail:(nonnull NSString*) email password:(nonnull NSString *)password completion:(nullable FIRAuthResultCallback)completion ;
+- (void) signInWithGoogleAccount:(nonnull NSString*) idToken accessToken:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion ;
+- (void) signInWithFacebookAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
 
 @end

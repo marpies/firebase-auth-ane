@@ -19,8 +19,18 @@
 
 static BOOL FirebaseAuthLogEnabled = NO;
 FREContext FirebaseAuthExtContext = nil;
+static FirebaseAuth* FirebaseAuthSharedInstance = nil;
 
 @implementation FirebaseAuth
+
+@synthesize helper;
+
++ (id) sharedInstance {
+    if( FirebaseAuthSharedInstance == nil ) {
+        FirebaseAuthSharedInstance = [[FirebaseAuth alloc] init];
+    }
+    return FirebaseAuthSharedInstance;
+}
 
 + (void) dispatchEvent:(const NSString*) eventName {
     [self dispatchEvent:eventName withMessage:@""];
