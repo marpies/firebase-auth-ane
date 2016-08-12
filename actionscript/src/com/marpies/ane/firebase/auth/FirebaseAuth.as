@@ -113,7 +113,7 @@ package com.marpies.ane.firebase.auth {
          * };
          * </listing>
          */
-        private static function createUser( email:String, password:String, callback:Function ):void {
+        public static function createUser( email:String, password:String, callback:Function ):void {
             if( !isSupported ) return;
             validateExtensionContext();
 
