@@ -288,7 +288,7 @@ package com.marpies.ane.firebase.auth {
          * Extension version.
          */
         public static function get version():String {
-            return "0.1.0";
+            return "0.3.0";
         }
 
         /**
