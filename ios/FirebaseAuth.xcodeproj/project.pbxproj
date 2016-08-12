@@ -17,6 +17,7 @@
 		C3F757321D5DF2A500C4A244 /* CreateUserFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757311D5DF2A500C4A244 /* CreateUserFunction.m */; };
 		C3F757371D5E337600C4A244 /* SignOutFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757361D5E337600C4A244 /* SignOutFunction.m */; };
 		C3F7573A1D5E368900C4A244 /* SignInWithFacebookFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757391D5E368900C4A244 /* SignInWithFacebookFunction.m */; };
+		C3F7573D1D5E397F00C4A244 /* SignInWithGoogleFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F7573C1D5E397F00C4A244 /* SignInWithGoogleFunction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +51,8 @@
 		C3F757361D5E337600C4A244 /* SignOutFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignOutFunction.m; sourceTree = "<group>"; };
 		C3F757381D5E368900C4A244 /* SignInWithFacebookFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInWithFacebookFunction.h; sourceTree = "<group>"; };
 		C3F757391D5E368900C4A244 /* SignInWithFacebookFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInWithFacebookFunction.m; sourceTree = "<group>"; };
+		C3F7573B1D5E397F00C4A244 /* SignInWithGoogleFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInWithGoogleFunction.h; sourceTree = "<group>"; };
+		C3F7573C1D5E397F00C4A244 /* SignInWithGoogleFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInWithGoogleFunction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +102,8 @@
 				C3F757361D5E337600C4A244 /* SignOutFunction.m */,
 				C3F757381D5E368900C4A244 /* SignInWithFacebookFunction.h */,
 				C3F757391D5E368900C4A244 /* SignInWithFacebookFunction.m */,
+				C3F7573B1D5E397F00C4A244 /* SignInWithGoogleFunction.h */,
+				C3F7573C1D5E397F00C4A244 /* SignInWithGoogleFunction.m */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 				C3073AE81BE2C77C00EC89B7 /* InitFunction.m in Sources */,
 				C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */,
 				C3F7573A1D5E368900C4A244 /* SignInWithFacebookFunction.m in Sources */,
+				C3F7573D1D5E397F00C4A244 /* SignInWithGoogleFunction.m in Sources */,
 				C3073AE41BE2C77C00EC89B7 /* FirebaseAuth.m in Sources */,
 				C3F757371D5E337600C4A244 /* SignOutFunction.m in Sources */,
 			);
