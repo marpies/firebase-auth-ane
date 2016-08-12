@@ -239,6 +239,22 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
+         * Signs out the current user and clears it from the disk cache.
+         *
+         * @return <code>true</code> error did not occur, <code>false</code> otherwise.
+         */
+        public static function signOut():Boolean {
+            if( !isSupported ) return false;
+            validateExtensionContext();
+
+            var result:Boolean;
+            CONFIG::ane {
+                result = mContext.call( "signOut" ) as Boolean;
+            }
+            return result;
+        }
+
+        /**
          * Disposes native extension context.
          */
         public static function dispose():void {
