@@ -19,6 +19,7 @@
 		C3F7573A1D5E368900C4A244 /* SignInWithFacebookFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757391D5E368900C4A244 /* SignInWithFacebookFunction.m */; };
 		C3F7573D1D5E397F00C4A244 /* SignInWithGoogleFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F7573C1D5E397F00C4A244 /* SignInWithGoogleFunction.m */; };
 		C3F757401D5E3A7300C4A244 /* SignInWithEmailFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F7573F1D5E3A7300C4A244 /* SignInWithEmailFunction.m */; };
+		C3F757431D5E3B4A00C4A244 /* SignInAnonymouslyFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757421D5E3B4A00C4A244 /* SignInAnonymouslyFunction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,6 +57,8 @@
 		C3F7573C1D5E397F00C4A244 /* SignInWithGoogleFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInWithGoogleFunction.m; sourceTree = "<group>"; };
 		C3F7573E1D5E3A7300C4A244 /* SignInWithEmailFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInWithEmailFunction.h; sourceTree = "<group>"; };
 		C3F7573F1D5E3A7300C4A244 /* SignInWithEmailFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInWithEmailFunction.m; sourceTree = "<group>"; };
+		C3F757411D5E3B4A00C4A244 /* SignInAnonymouslyFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInAnonymouslyFunction.h; sourceTree = "<group>"; };
+		C3F757421D5E3B4A00C4A244 /* SignInAnonymouslyFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInAnonymouslyFunction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				C3F7573C1D5E397F00C4A244 /* SignInWithGoogleFunction.m */,
 				C3F7573E1D5E3A7300C4A244 /* SignInWithEmailFunction.h */,
 				C3F7573F1D5E3A7300C4A244 /* SignInWithEmailFunction.m */,
+				C3F757411D5E3B4A00C4A244 /* SignInAnonymouslyFunction.h */,
+				C3F757421D5E3B4A00C4A244 /* SignInAnonymouslyFunction.m */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3F757321D5DF2A500C4A244 /* CreateUserFunction.m in Sources */,
+				C3F757431D5E3B4A00C4A244 /* SignInAnonymouslyFunction.m in Sources */,
 				C3073AE81BE2C77C00EC89B7 /* InitFunction.m in Sources */,
 				C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */,
 				C3F7573A1D5E368900C4A244 /* SignInWithFacebookFunction.m in Sources */,

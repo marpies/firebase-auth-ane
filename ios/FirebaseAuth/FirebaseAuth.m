@@ -21,6 +21,7 @@
 #import "Functions/SignInWithFacebookFunction.h"
 #import "Functions/SignInWithGoogleFunction.h"
 #import "Functions/SignInWithEmailFunction.h"
+#import "Functions/SignInAnonymouslyFunction.h"
 
 static BOOL FirebaseAuthLogEnabled = NO;
 FREContext FirebaseAuthExtContext = nil;
@@ -72,6 +73,7 @@ FRENamedFunction airFirebaseAuthExtFunctions[] = {
     { (const uint8_t*) "signInWithFacebookAccount",  0, fba_signInWithFacebook },
     { (const uint8_t*) "signInWithGoogleAccount",    0, fba_signInWithGoogle },
     { (const uint8_t*) "signInWithEmailAndPassword", 0, fba_signInWithEmail },
+    { (const uint8_t*) "signInAnonymously",          0, fba_signInAnonymously },
     { (const uint8_t*) "signOut",                    0, fba_signOut }
 };
 
