@@ -61,13 +61,14 @@ static FirebaseAuth* FirebaseAuthSharedInstance = nil;
  *
  **/
 
+FRENamedFunction airFirebaseAuthExtFunctions[] = {
+    { (const uint8_t*) "init",               0, fba_init }
+};
+
 void FirebaseAuthContextInitializer( void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToSet, const FRENamedFunction** functionsToSet ) {
-    FRENamedFunction extFunctions[] = {
-        { (const uint8_t*) "init",               0, fba_init }
-    };
-    *numFunctionsToSet = sizeof( extFunctions ) / sizeof( FRENamedFunction );
+    *numFunctionsToSet = sizeof( airFirebaseAuthExtFunctions ) / sizeof( FRENamedFunction );
     
-    *functionsToSet = extFunctions;
+    *functionsToSet = airFirebaseAuthExtFunctions;
     
     FirebaseAuthExtContext = ctx;
 }
