@@ -37,12 +37,17 @@ package com.marpies.ane.firebase.auth {
         }
 
         /* Event codes */
+        private static const SIGN_IN_ERROR:String = "signInError";
+        private static const SIGN_IN_SUCCESS:String = "signInSuccess";
+        private static const AUTH_STATE_SIGN_IN:String = "authStateSignIn";
+        private static const AUTH_STATE_SIGN_OFF:String = "authStateSignOff";
 
         /* Callbacks */
         private static var mCallbackMap:Dictionary;
         private static var mCallbackIdCounter:int;
 
         /* Misc */
+        private static var mFirebaseUser:FirebaseUser;
         private static var mInitialized:Boolean;
         private static var mLogEnabled:Boolean;
 
@@ -240,6 +245,8 @@ package com.marpies.ane.firebase.auth {
             if( !isSupported ) return;
             validateExtensionContext();
 
+            mFirebaseUser = null;
+
             CONFIG::ane {
                 mContext.removeEventListener( StatusEvent.STATUS, onStatus );
                 mContext.dispose();
@@ -256,6 +263,10 @@ package com.marpies.ane.firebase.auth {
          *
          *
          */
+
+        public static function get currentUser():FirebaseUser {
+            return mFirebaseUser;
+        }
 
         /**
          * Extension version.
@@ -333,7 +344,46 @@ package com.marpies.ane.firebase.auth {
         }
 
         private static function onStatus( event:StatusEvent ):void {
+            var json:Object = null;
+            var callbackId:int = -1;
+            var callback:Function = null;
+            switch( event.code ) {
+                case SIGN_IN_SUCCESS:
+                    json = JSON.parse( event.level );
+                    mFirebaseUser = FirebaseUser.fromJSON( json.user );
+                    callbackId = json.callbackId;
+                    callback = getCallback( callbackId );
+                    if( callback !== null ) {
+                        unregisterCallback( callbackId );
+                        callback( mFirebaseUser, null );
+                    }
+                    return;
 
+                case SIGN_IN_ERROR:
+                    json = JSON.parse( event.level );
+                    var errorMessage:String = json.errorMessage;
+                    callbackId = json.listenerID;
+                    callback = getCallback( callbackId );
+                    if( callback !== null ) {
+                        unregisterCallback( callbackId );
+                        callback( null, errorMessage );
+                    }
+                    return;
+
+                case AUTH_STATE_SIGN_IN:
+                    /* We may receive this event on app startup when user has signed in before */
+                    if( mFirebaseUser === null ) {
+                        json = (event.level != "") ? JSON.parse( event.level ) : null;
+                        if( json !== null ) {
+                            mFirebaseUser = FirebaseUser.fromJSON( json );
+                        }
+                    }
+                    return;
+
+                case AUTH_STATE_SIGN_OFF:
+                    mFirebaseUser = null;
+                    return;
+            }
         }
 
         private static function log( message:String ):void {
