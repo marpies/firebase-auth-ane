@@ -97,6 +97,143 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
+         * Attempts to create a new user account with the given email address and password.
+         * If successful, it also signs the user in into the app.
+         *
+         * @param email User's email address.
+         * @param password User's password.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser, errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been created and signed in
+         *      } else {
+         *          // there was an error creating the user
+         *      }
+         * };
+         * </listing>
+         */
+        private static function createUser( email:String, password:String, callback:Function ):void {
+            if( !isSupported ) return;
+            validateExtensionContext();
+
+            if( email === null ) throw new ArgumentError( "Parameter email cannot be null." );
+            if( password === null ) throw new ArgumentError( "Parameter password cannot be null." );
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+
+            CONFIG::ane {
+                mContext.call( "createUser", email, password, registerCallback( callback ) );
+            }
+        }
+
+        /**
+         * Attempts to sign in anonymously, i.e. creates an anonymous user.
+         * If there is already an anonymous user signed in, that user will be returned instead.
+         *
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser, errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been signed in
+         *      } else {
+         *          // there was an error singing the user in
+         *      }
+         * };
+         */
+        public static function signInAnonymously( callback:Function ):void {
+            if( !isSupported ) return;
+            validateExtensionContext();
+
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+
+            CONFIG::ane {
+                mContext.call( "signInAnonymously", registerCallback( callback ) );
+            }
+        }
+
+        /**
+         * Attempts to sign the user in using email and password.
+         *
+         * @param email User's email address.
+         * @param password User's password.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser, errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been signed in
+         *      } else {
+         *          // there was an error singing the user in
+         *      }
+         * };
+         */
+        public static function signInWithEmailAndPassword( email:String, password:String, callback:Function ):void {
+            if( !isSupported ) return;
+            validateExtensionContext();
+
+            if( email === null ) throw new ArgumentError( "Parameter email cannot be null." );
+            if( password === null ) throw new ArgumentError( "Parameter password cannot be null." );
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+
+            CONFIG::ane {
+                mContext.call( "signInWithEmailAndPassword", email, password, registerCallback( callback ) );
+            }
+        }
+
+        /**
+         * Attempts to sign the user in with Google's ID token and access token.
+         *
+         * @param idToken User's ID token obtained from Google.
+         * @param accessToken User's access token obtained from Google.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser, errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been signed in
+         *      } else {
+         *          // there was an error singing the user in
+         *      }
+         * };
+         */
+        public static function signInWithGoogleAccount( idToken:String, accessToken:String, callback:Function ):void {
+            if( !isSupported ) return;
+            validateExtensionContext();
+
+            if( idToken === null ) throw new ArgumentError( "Parameter idToken cannot be null." );
+            if( accessToken === null ) throw new ArgumentError( "Parameter accessToken cannot be null." );
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+
+            CONFIG::ane {
+                mContext.call( "signInWithGoogleAccount", idToken, accessToken, registerCallback( callback ) );
+            }
+        }
+
+        /**
+         * Attempts to sign the user in with Facebook's access token.
+         *
+         * @param accessToken User's access token obtained from Facebook.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser, errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been signed in
+         *      } else {
+         *          // there was an error singing the user in
+         *      }
+         * };
+         */
+        public static function signInWithFacebookAccount( accessToken:String, callback:Function ):void {
+            if( !isSupported ) return;
+            validateExtensionContext();
+
+            if( accessToken === null ) throw new ArgumentError( "Parameter accessToken cannot be null." );
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+
+            CONFIG::ane {
+                mContext.call( "signInWithFacebookAccount", accessToken, registerCallback( callback ) );
+            }
+        }
+
+        /**
          * Disposes native extension context.
          */
         public static function dispose():void {

@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-#import "FirebaseAuthHelper.h"
+package com.marpies.ane.firebase.auth {
 
-@implementation FirebaseAuthHelper
-@end
+    public class FirebaseUser {
+
+        public function FirebaseUser() {
+        }
+
+    }
+
+}
