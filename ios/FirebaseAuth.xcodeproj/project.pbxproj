@@ -14,6 +14,7 @@
 		C3F7572D1D5DCBB900C4A244 /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572A1D5DCBB900C4A244 /* FirebaseAuth.framework */; };
 		C3F7572E1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572B1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework */; };
 		C3F7572F1D5DCBB900C4A244 /* GoogleParsingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572C1D5DCBB900C4A244 /* GoogleParsingUtilities.framework */; };
+		C3F757321D5DF2A500C4A244 /* CreateUserFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757311D5DF2A500C4A244 /* CreateUserFunction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,9 @@
 		C3F7572A1D5DCBB900C4A244 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = "<group>"; };
 		C3F7572B1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleNetworkingUtilities.framework; sourceTree = "<group>"; };
 		C3F7572C1D5DCBB900C4A244 /* GoogleParsingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleParsingUtilities.framework; sourceTree = "<group>"; };
+		C3F757301D5DF2A500C4A244 /* CreateUserFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateUserFunction.h; sourceTree = "<group>"; };
+		C3F757311D5DF2A500C4A244 /* CreateUserFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateUserFunction.m; sourceTree = "<group>"; };
+		C3F757341D5DF5EA00C4A244 /* FirebaseAuthEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FirebaseAuthEvent.h; path = Data/FirebaseAuthEvent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,7 @@
 		C3073AD51BE2C77C00EC89B7 /* FirebaseAuth */ = {
 			isa = PBXGroup;
 			children = (
+				C3F757331D5DF5DA00C4A244 /* Data */,
 				C3A2A5181D5DC91300AC9B85 /* Utils */,
 				C37509F81C79388900516C15 /* Frameworks */,
 				C3073AD61BE2C77C00EC89B7 /* FirebaseAuth.h */,
@@ -82,6 +87,8 @@
 			children = (
 				C3073AE11BE2C77C00EC89B7 /* InitFunction.h */,
 				C3073AE21BE2C77C00EC89B7 /* InitFunction.m */,
+				C3F757301D5DF2A500C4A244 /* CreateUserFunction.h */,
+				C3F757311D5DF2A500C4A244 /* CreateUserFunction.m */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -120,6 +127,14 @@
 				C3F757281D5DCADF00C4A244 /* FirebaseAuthHelper.m */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		C3F757331D5DF5DA00C4A244 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C3F757341D5DF5EA00C4A244 /* FirebaseAuthEvent.h */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3F757321D5DF2A500C4A244 /* CreateUserFunction.m in Sources */,
 				C3073AE81BE2C77C00EC89B7 /* InitFunction.m in Sources */,
 				C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */,
 				C3073AE41BE2C77C00EC89B7 /* FirebaseAuth.m in Sources */,

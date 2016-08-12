@@ -16,6 +16,7 @@
 
 #import "FirebaseAuthHelper.h"
 #import "FirebaseAuth.h"
+#import "FirebaseAuthEvent.h"
 #import <AIRExtHelpers/MPStringUtils.h>
 #import <FirebaseAuth/FIRUserInfo.h>
 
@@ -33,6 +34,10 @@
     }
     
     return self;
+}
+
+- (FIRUser*) getUser {
+    return [FIRAuth auth].currentUser;
 }
 
 - (void) createUserWithEmail:(NSString*) email password:(NSString *)password completion:(FIRAuthResultCallback) completion {
@@ -62,16 +67,71 @@
     [[FIRAuth auth] signInWithCredential:credential completion:completion];
 }
 
+- (NSString*) getJSONFromUser:(FIRUser*) newUser {
+    FIRUser* user = (newUser == nil) ? [self getUser] : newUser;
+    if( user != nil ) {
+        NSMutableDictionary* json = [NSMutableDictionary dictionary];
+        json[@"uid"] = user.uid;
+        json[@"isAnonymous"] = @(user.isAnonymous);
+        if( user.displayName != nil ) {
+            json[@"displayName"] = user.displayName;
+        }
+        NSMutableArray* providerData = [NSMutableArray array];
+        for( id<FIRUserInfo> userInfo in user.providerData ) {
+            NSString* userInfoJSON = [self getJSONFromUserInfo:userInfo];
+            if( userInfoJSON != nil ) {
+                [providerData addObject:userInfoJSON];
+            }
+        }
+        if( providerData.count > 0 ) {
+            json[@"providerData"] = providerData;
+        }
+        return [MPStringUtils getJSONString:json];
+    }
+    return nil;
+}
+
 # pragma mark - Private API
 
 - (void) addAuthListener {
     [[FIRAuth auth] addAuthStateDidChangeListener:^(FIRAuth * _Nonnull auth, FIRUser * _Nullable user) {
         if (user != nil) {
-            [FirebaseAuth log:[NSString stringWithFormat:@"User has signed in, name: %@", user.displayName]];
+            [FirebaseAuth log:@"User has signed in"];
+            NSString* userJSON = [self getJSONFromUser:user];
+            if( userJSON == nil ) {
+                userJSON = @"";
+            }
+            [FirebaseAuth dispatchEvent:FBA_AUTH_STATE_SIGN_IN withMessage:userJSON];
         } else {
             [FirebaseAuth log:@"No user is currently signed in"];
+            /* Dispatch internal event to remove cached FIRUser in AS3 lib */
+            [FirebaseAuth dispatchEvent:FBA_AUTH_STATE_SIGN_OFF];
         }
     }];
 }
 
+- (NSString*) getJSONFromUserInfo:(id<FIRUserInfo>) userInfo {
+    NSMutableDictionary* json = [NSMutableDictionary dictionary];
+    NSString* providerID = userInfo.providerID;
+    if( providerID != nil ) {
+        json[@"providerId"] = providerID;
+    }
+    NSString* uid = userInfo.uid;
+    if( uid != nil ) {
+        json[@"uid"] = uid;
+    }
+    NSString* name = userInfo.displayName;
+    if( name != nil ) {
+        json[@"displayName"] = name;
+    }
+    NSString* email = userInfo.email;
+    if( email != nil ) {
+        json[@"email"] = email;
+    }
+    NSURL* photoURL = userInfo.photoURL;
+    if( photoURL != nil ) {
+        json[@"photoURL"] = photoURL.absoluteString;
+    }
+    return [MPStringUtils getJSONString:json];
+}
 @end

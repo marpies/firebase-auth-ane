@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.marpies.ane.firebase.auth {
+#ifndef FirebaseAuthEvent_h
+#define FirebaseAuthEvent_h
 
-    public class FirebaseUser {
+#import <Foundation/Foundation.h>
 
-        public function FirebaseUser() {
-        }
+static NSString* const FBA_SIGN_IN_ERROR = @"signInError";
+static NSString* const FBA_SIGN_IN_SUCCESS = @"signInSuccess";
+static NSString* const FBA_AUTH_STATE_SIGN_IN = @"authStateSignIn";
+static NSString* const FBA_AUTH_STATE_SIGN_OFF = @"authStateSignOff";
 
-    }
-
-}
+#endif /* FirebaseAuthEvent_h */
