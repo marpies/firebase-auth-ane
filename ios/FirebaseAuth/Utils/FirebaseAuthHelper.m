@@ -76,6 +76,31 @@
     return NO;
 }
 
+- (void) processAuthResponse:(nullable FIRUser*) user error:(nullable NSError*) error callbackId:(int) callbackId {
+    /* Success */
+    if( error == nil ) {
+        NSString* userJSON = [self getJSONFromUser:user];
+        NSMutableDictionary* response = [NSMutableDictionary dictionary];
+        response[@"user"] = userJSON;
+        response[@"callbackId"] = @(callbackId);
+        NSString* responseJSON = [MPStringUtils getJSONString:response];
+        if( responseJSON != nil ) {
+            [FirebaseAuth log:@"User authentication success"];
+            [FirebaseAuth dispatchEvent:FBA_SIGN_IN_SUCCESS withMessage:responseJSON];
+        } else {
+            [FirebaseAuth log:@"User authentication success, but failed to create response"];
+            [FirebaseAuth dispatchEvent:FBA_SIGN_IN_ERROR withMessage:[MPStringUtils getEventErrorJSONString:callbackId errorMessage:@"Failed to create response."]];
+        }
+    }
+    /* Error */
+    else {
+        [FirebaseAuth log:[NSString stringWithFormat:@"Error authenticating user: %@", error.localizedDescription]];
+        [FirebaseAuth dispatchEvent:FBA_SIGN_IN_ERROR withMessage:[MPStringUtils getEventErrorJSONString:callbackId errorMessage:error.localizedDescription]];
+    }
+}
+
+# pragma mark - Private API
+
 - (NSString*) getJSONFromUser:(FIRUser*) newUser {
     FIRUser* user = (newUser == nil) ? [self getUser] : newUser;
     if( user != nil ) {
@@ -100,7 +125,6 @@
     return nil;
 }
 
-# pragma mark - Private API
 
 - (void) addAuthListener {
     [[FIRAuth auth] addAuthStateDidChangeListener:^(FIRAuth * _Nonnull auth, FIRUser * _Nullable user) {

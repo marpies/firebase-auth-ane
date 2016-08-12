@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-#import "CreateUserFunction.h"
+#import "SignInWithFacebookFunction.h"
 #import "FirebaseAuth.h"
-#import "FirebaseAuthEvent.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
-#import <AIRExtHelpers/MPStringUtils.h>
 
-FREObject fba_createUser( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
-    [FirebaseAuth log:@"FirebaseAuth::fba_createUser"];
-    NSString* email = [MPFREObjectUtils getNSString:argv[0]];
-    NSString* password = [MPFREObjectUtils getNSString:argv[1]];
-    int callbackId = [MPFREObjectUtils getInt:argv[2]];
+FREObject fba_signInWithFacebook( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
+    [FirebaseAuth log:@"FirebaseAuth::fba_signInWithFacebook"];
+    NSString* accessToken = [MPFREObjectUtils getNSString:argv[0]];
+    int callbackId = [MPFREObjectUtils getInt:argv[1]];
     
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper createUserWithEmail:email password:password completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    [authHelper signInWithFacebookAccount:accessToken completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

@@ -30,6 +30,6 @@
 
 - (BOOL) signOut;
 
-- (nullable NSString*) getJSONFromUser:(nullable FIRUser*) user;
+- (void) processAuthResponse:(nullable FIRUser*) user error:(nullable NSError*) error callbackId:(int) callbackId;
 
 @end
