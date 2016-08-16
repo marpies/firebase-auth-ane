@@ -1,4 +1,6 @@
-# FirebaseAuth | Firebase Auth extension for Adobe AIR (iOS & Android)
+# Firebase Authentication | Extension for Adobe AIR (iOS & Android)
+
+[Firebase Authentication](https://firebase.google.com/docs/auth/) provides backend services and easy-to-use APIs to authenticate users to your app. It supports authentication using passwords, popular federated identity providers like Google, Facebook and Twitter, and more.
 
 Development of this extension is supported by [Master Tigra, Inc.](https://github.com/mastertigra)
 
