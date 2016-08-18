@@ -69,6 +69,65 @@ package com.marpies.ane.firebase.auth {
         /**
          *
          *
+         * Public API
+         *
+         *
+         */
+
+        /**
+         * Attaches the given <code>IAuthCredential</code> to the user.
+         * This allows the user to sign in to this account in the future with credentials for such provider.
+         *
+         * @param credential The credential to link the current user with.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser, errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been linked with the credential
+         *      } else {
+         *          // there was an error linking the user with the credential
+         *      }
+         * };
+         * </listing>
+         *
+         * @see com.marpies.ane.firebase.auth.EmailAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.FacebookAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.GoogleAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.TwitterAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.GithubAuthProvider#getCredential()
+         */
+        public function linkWithCredential( credential:IAuthCredential, callback:Function ):void {
+            if( !FirebaseAuth.isSupported ) return;
+            FirebaseAuth.validateExtensionContext();
+
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+            if( credential === null ) throw new ArgumentError( "Parameter credential cannot be null." );
+
+            switch( credential.providerId ) {
+                case FirebaseAuthProviders.EMAIL:
+                    FirebaseAuth.linkWithEmailCredential( credential as EmailAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.FACEBOOK:
+                    FirebaseAuth.linkWithFacebookCredential( credential as FacebookAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.GOOGLE:
+                    FirebaseAuth.linkWithGoogleCredential( credential as GoogleAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.TWITTER:
+                    FirebaseAuth.linkWithTwitterCredential( credential as TwitterAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.GITHUB:
+                    FirebaseAuth.linkWithGithubCredential( credential as GithubAuthCredential, callback );
+                    return;
+                default:
+                    throw new ArgumentError( "Encountered credential for unknown provider: " + credential.providerId );
+            }
+
+        }
+
+        /**
+         *
+         *
          * Getters / Setters
          *
          *

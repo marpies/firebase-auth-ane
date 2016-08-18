@@ -241,57 +241,6 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
-         * Attaches the given <code>IAuthCredential</code> to the user.
-         * This allows the user to sign in to this account in the future with credentials for such provider.
-         *
-         * @param credential The credential to link the current user with.
-         * @param callback Function with the following signature:
-         * <listing version="3.0">
-         * function callback( user:FirebaseUser, errorMessage:String ):void {
-         *      if( errorMessage == null ) {
-         *          // user has been linked with the credential
-         *      } else {
-         *          // there was an error linking the user with the credential
-         *      }
-         * };
-         * </listing>
-         *
-         * @see com.marpies.ane.firebase.auth.EmailAuthProvider#getCredential()
-         * @see com.marpies.ane.firebase.auth.FacebookAuthProvider#getCredential()
-         * @see com.marpies.ane.firebase.auth.GoogleAuthProvider#getCredential()
-         * @see com.marpies.ane.firebase.auth.TwitterAuthProvider#getCredential()
-         * @see com.marpies.ane.firebase.auth.GithubAuthProvider#getCredential()
-         */
-        public static function linkWithCredential( credential:IAuthCredential, callback:Function ):void {
-            if( !isSupported ) return;
-            validateExtensionContext();
-
-            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
-            if( credential === null ) throw new ArgumentError( "Parameter credential cannot be null." );
-
-            switch( credential.providerId ) {
-                case FirebaseAuthProviders.EMAIL:
-                    linkWithEmailCredential( credential as EmailAuthCredential, callback );
-                    return;
-                case FirebaseAuthProviders.FACEBOOK:
-                    linkWithFacebookCredential( credential as FacebookAuthCredential, callback );
-                    return;
-                case FirebaseAuthProviders.GOOGLE:
-                    linkWithGoogleCredential( credential as GoogleAuthCredential, callback );
-                    return;
-                case FirebaseAuthProviders.TWITTER:
-                    linkWithTwitterCredential( credential as TwitterAuthCredential, callback );
-                    return;
-                case FirebaseAuthProviders.GITHUB:
-                    linkWithGithubCredential( credential as GithubAuthCredential, callback );
-                    return;
-                default:
-                    throw new ArgumentError( "Encountered credential for unknown provider: " + credential.providerId );
-            }
-
-        }
-
-        /**
          * Signs out the current user and clears it from the disk cache.
          *
          * @return <code>true</code> error did not occur, <code>false</code> otherwise.
@@ -354,6 +303,66 @@ package com.marpies.ane.firebase.auth {
         /**
          *
          *
+         * Internal API
+         *
+         *
+         */
+
+        /**
+         *
+         * LINK WITH CREDENTIAL
+         *
+         */
+
+        internal static function linkWithEmailCredential( credential:EmailAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid email credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithEmailAndPassword", credential.email, credential.password, registerCallback( callback ) );
+            }
+        }
+
+        internal static function linkWithFacebookCredential( credential:FacebookAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Facebook credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithFacebookAccount", credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        internal static function linkWithGoogleCredential( credential:GoogleAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Google credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithGoogleAccount", credential.idToken, credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        internal static function linkWithTwitterCredential( credential:TwitterAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Twitter credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithTwitterAccount", credential.token, credential.secret, registerCallback( callback ) );
+            }
+        }
+
+        internal static function linkWithGithubCredential( credential:GithubAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Github credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithGithubAccount", credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        internal static function validateExtensionContext():void {
+            CONFIG::ane {
+                if( !mContext ) throw new Error( "FirebaseAuth extension was not initialized. Call init() first." );
+            }
+        }
+
+        /**
+         *
+         *
          * Private API
          *
          *
@@ -406,52 +415,6 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
-         *
-         * LINK WITH CREDENTIAL
-         *
-         */
-
-        private static function linkWithEmailCredential( credential:EmailAuthCredential, callback:Function ):void {
-            if( credential === null ) throw new ArgumentError( "Invalid email credential provided." );
-
-            CONFIG::ane {
-                mContext.call( "linkWithEmailAndPassword", credential.email, credential.password, registerCallback( callback ) );
-            }
-        }
-
-        private static function linkWithFacebookCredential( credential:FacebookAuthCredential, callback:Function ):void {
-            if( credential === null ) throw new ArgumentError( "Invalid Facebook credential provided." );
-
-            CONFIG::ane {
-                mContext.call( "linkWithFacebookAccount", credential.accessToken, registerCallback( callback ) );
-            }
-        }
-
-        private static function linkWithGoogleCredential( credential:GoogleAuthCredential, callback:Function ):void {
-            if( credential === null ) throw new ArgumentError( "Invalid Google credential provided." );
-
-            CONFIG::ane {
-                mContext.call( "linkWithGoogleAccount", credential.idToken, credential.accessToken, registerCallback( callback ) );
-            }
-        }
-
-        private static function linkWithTwitterCredential( credential:TwitterAuthCredential, callback:Function ):void {
-            if( credential === null ) throw new ArgumentError( "Invalid Twitter credential provided." );
-
-            CONFIG::ane {
-                mContext.call( "linkWithTwitterAccount", credential.token, credential.secret, registerCallback( callback ) );
-            }
-        }
-
-        private static function linkWithGithubCredential( credential:GithubAuthCredential, callback:Function ):void {
-            if( credential === null ) throw new ArgumentError( "Invalid Github credential provided." );
-
-            CONFIG::ane {
-                mContext.call( "linkWithGithubAccount", credential.accessToken, registerCallback( callback ) );
-            }
-        }
-
-        /**
          * Initializes extension context.
          * @return <code>true</code> if initialized successfully, <code>false</code> otherwise.
          */
@@ -495,12 +458,6 @@ package com.marpies.ane.firebase.auth {
         private static function unregisterCallback( callbackID:int ):void {
             if( callbackID in mCallbackMap ) {
                 delete mCallbackMap[callbackID];
-            }
-        }
-
-        private static function validateExtensionContext():void {
-            CONFIG::ane {
-                if( !mContext ) throw new Error( "FirebaseAuth extension was not initialized. Call init() first." );
             }
         }
 
