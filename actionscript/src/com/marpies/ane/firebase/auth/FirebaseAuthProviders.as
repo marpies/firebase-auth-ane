@@ -26,6 +26,25 @@ package com.marpies.ane.firebase.auth {
          */
         public static const GITHUB:String = "github.com";
 
+        /**
+         * @private
+         *
+         * Returns <code>true</code> if the given provider identifier belongs to one of the supported providers,
+         * <code>false</code> otherwise.
+         */
+        internal static function isSupported( providerId:String ):Boolean {
+            switch( providerId ) {
+                case EMAIL:
+                case GOOGLE:
+                case FACEBOOK:
+                case TWITTER:
+                case GITHUB:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
     }
 
 }

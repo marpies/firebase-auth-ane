@@ -314,6 +314,9 @@ package com.marpies.ane.firebase.auth {
          *
          */
 
+        /**
+         * @private
+         */
         internal static function linkWithEmailCredential( credential:EmailAuthCredential, callback:Function ):void {
             if( credential === null ) throw new ArgumentError( "Invalid email credential provided." );
 
@@ -322,6 +325,9 @@ package com.marpies.ane.firebase.auth {
             }
         }
 
+        /**
+         * @private
+         */
         internal static function linkWithFacebookCredential( credential:FacebookAuthCredential, callback:Function ):void {
             if( credential === null ) throw new ArgumentError( "Invalid Facebook credential provided." );
 
@@ -330,6 +336,9 @@ package com.marpies.ane.firebase.auth {
             }
         }
 
+        /**
+         * @private
+         */
         internal static function linkWithGoogleCredential( credential:GoogleAuthCredential, callback:Function ):void {
             if( credential === null ) throw new ArgumentError( "Invalid Google credential provided." );
 
@@ -338,6 +347,9 @@ package com.marpies.ane.firebase.auth {
             }
         }
 
+        /**
+         * @private
+         */
         internal static function linkWithTwitterCredential( credential:TwitterAuthCredential, callback:Function ):void {
             if( credential === null ) throw new ArgumentError( "Invalid Twitter credential provided." );
 
@@ -346,6 +358,9 @@ package com.marpies.ane.firebase.auth {
             }
         }
 
+        /**
+         * @private
+         */
         internal static function linkWithGithubCredential( credential:GithubAuthCredential, callback:Function ):void {
             if( credential === null ) throw new ArgumentError( "Invalid Github credential provided." );
 
@@ -354,6 +369,18 @@ package com.marpies.ane.firebase.auth {
             }
         }
 
+        /**
+         * @private
+         */
+        internal static function unlinkFromProvider( providerId:String, callback:Function ):void {
+            CONFIG::ane {
+                mContext.call( "unlinkFromProvider", providerId, registerCallback( callback ) );
+            }
+        }
+
+        /**
+         * @private
+         */
         internal static function validateExtensionContext():void {
             CONFIG::ane {
                 if( !mContext ) throw new Error( "FirebaseAuth extension was not initialized. Call init() first." );

@@ -122,7 +122,35 @@ package com.marpies.ane.firebase.auth {
                 default:
                     throw new ArgumentError( "Encountered credential for unknown provider: " + credential.providerId );
             }
+        }
 
+        /**
+         * Detaches credentials from a given provider type from this user.
+         * This prevents the user from signing in to this account in the future with credentials from such provider.
+         *
+         * @param providerId Unique identifier of the type of provider to be unlinked.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser, errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been linked with the credential
+         *      } else {
+         *          // there was an error linking the user with the credential
+         *      }
+         * };
+         * </listing>
+         *
+         * @see com.marpies.ane.firebase.auth.FirebaseAuthProviders
+         */
+        public function unlinkFromProvider( providerId:String, callback:Function ):void {
+            if( !FirebaseAuth.isSupported ) return;
+            FirebaseAuth.validateExtensionContext();
+
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+            if( providerId === null ) throw new ArgumentError( "Parameter providerId cannot be null." );
+            if( !FirebaseAuthProviders.isSupported( providerId ) ) throw new ArgumentError( "Encountered unsupported provider identifier '" + providerId + "'." );
+
+            FirebaseAuth.unlinkFromProvider( providerId, callback );
         }
 
         /**
