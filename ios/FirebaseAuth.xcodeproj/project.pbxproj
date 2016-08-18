@@ -12,6 +12,11 @@
 		C37509FA1C79388900516C15 /* AIRExtHelpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37509F91C79388900516C15 /* AIRExtHelpers.framework */; };
 		C3A0D1121D661F6A005919E4 /* SignInWithGithubFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D1111D661F6A005919E4 /* SignInWithGithubFunction.m */; };
 		C3A0D1151D662040005919E4 /* SignInWithTwitterFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D1141D662040005919E4 /* SignInWithTwitterFunction.m */; };
+		C3A0D1201D6626C2005919E4 /* LinkWithEmailFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D1171D6626C2005919E4 /* LinkWithEmailFunction.m */; };
+		C3A0D1211D6626C2005919E4 /* LinkWithFacebookFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D1191D6626C2005919E4 /* LinkWithFacebookFunction.m */; };
+		C3A0D1221D6626C2005919E4 /* LinkWithGithubFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D11B1D6626C2005919E4 /* LinkWithGithubFunction.m */; };
+		C3A0D1231D6626C2005919E4 /* LinkWithGoogleFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D11D1D6626C2005919E4 /* LinkWithGoogleFunction.m */; };
+		C3A0D1241D6626C2005919E4 /* LinkWithTwitterFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D11F1D6626C2005919E4 /* LinkWithTwitterFunction.m */; };
 		C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757281D5DCADF00C4A244 /* FirebaseAuthHelper.m */; };
 		C3F7572D1D5DCBB900C4A244 /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572A1D5DCBB900C4A244 /* FirebaseAuth.framework */; };
 		C3F7572E1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572B1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework */; };
@@ -47,6 +52,16 @@
 		C3A0D1111D661F6A005919E4 /* SignInWithGithubFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInWithGithubFunction.m; sourceTree = "<group>"; };
 		C3A0D1131D662040005919E4 /* SignInWithTwitterFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInWithTwitterFunction.h; sourceTree = "<group>"; };
 		C3A0D1141D662040005919E4 /* SignInWithTwitterFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInWithTwitterFunction.m; sourceTree = "<group>"; };
+		C3A0D1161D6626C2005919E4 /* LinkWithEmailFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkWithEmailFunction.h; sourceTree = "<group>"; };
+		C3A0D1171D6626C2005919E4 /* LinkWithEmailFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkWithEmailFunction.m; sourceTree = "<group>"; };
+		C3A0D1181D6626C2005919E4 /* LinkWithFacebookFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkWithFacebookFunction.h; sourceTree = "<group>"; };
+		C3A0D1191D6626C2005919E4 /* LinkWithFacebookFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkWithFacebookFunction.m; sourceTree = "<group>"; };
+		C3A0D11A1D6626C2005919E4 /* LinkWithGithubFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkWithGithubFunction.h; sourceTree = "<group>"; };
+		C3A0D11B1D6626C2005919E4 /* LinkWithGithubFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkWithGithubFunction.m; sourceTree = "<group>"; };
+		C3A0D11C1D6626C2005919E4 /* LinkWithGoogleFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkWithGoogleFunction.h; sourceTree = "<group>"; };
+		C3A0D11D1D6626C2005919E4 /* LinkWithGoogleFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkWithGoogleFunction.m; sourceTree = "<group>"; };
+		C3A0D11E1D6626C2005919E4 /* LinkWithTwitterFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkWithTwitterFunction.h; sourceTree = "<group>"; };
+		C3A0D11F1D6626C2005919E4 /* LinkWithTwitterFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkWithTwitterFunction.m; sourceTree = "<group>"; };
 		C3F757271D5DCADF00C4A244 /* FirebaseAuthHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirebaseAuthHelper.h; path = Utils/FirebaseAuthHelper.h; sourceTree = "<group>"; };
 		C3F757281D5DCADF00C4A244 /* FirebaseAuthHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirebaseAuthHelper.m; path = Utils/FirebaseAuthHelper.m; sourceTree = "<group>"; };
 		C3F7572A1D5DCBB900C4A244 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = "<group>"; };
@@ -106,6 +121,16 @@
 		C3073AE01BE2C77C00EC89B7 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				C3A0D1161D6626C2005919E4 /* LinkWithEmailFunction.h */,
+				C3A0D1171D6626C2005919E4 /* LinkWithEmailFunction.m */,
+				C3A0D1181D6626C2005919E4 /* LinkWithFacebookFunction.h */,
+				C3A0D1191D6626C2005919E4 /* LinkWithFacebookFunction.m */,
+				C3A0D11A1D6626C2005919E4 /* LinkWithGithubFunction.h */,
+				C3A0D11B1D6626C2005919E4 /* LinkWithGithubFunction.m */,
+				C3A0D11C1D6626C2005919E4 /* LinkWithGoogleFunction.h */,
+				C3A0D11D1D6626C2005919E4 /* LinkWithGoogleFunction.m */,
+				C3A0D11E1D6626C2005919E4 /* LinkWithTwitterFunction.h */,
+				C3A0D11F1D6626C2005919E4 /* LinkWithTwitterFunction.m */,
 				C3073AE11BE2C77C00EC89B7 /* InitFunction.h */,
 				C3073AE21BE2C77C00EC89B7 /* InitFunction.m */,
 				C3F757301D5DF2A500C4A244 /* CreateUserFunction.h */,
@@ -232,12 +257,17 @@
 				C3F757431D5E3B4A00C4A244 /* SignInAnonymouslyFunction.m in Sources */,
 				C3073AE81BE2C77C00EC89B7 /* InitFunction.m in Sources */,
 				C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */,
+				C3A0D1221D6626C2005919E4 /* LinkWithGithubFunction.m in Sources */,
+				C3A0D1211D6626C2005919E4 /* LinkWithFacebookFunction.m in Sources */,
 				C3F7573A1D5E368900C4A244 /* SignInWithFacebookFunction.m in Sources */,
+				C3A0D1241D6626C2005919E4 /* LinkWithTwitterFunction.m in Sources */,
 				C3F7573D1D5E397F00C4A244 /* SignInWithGoogleFunction.m in Sources */,
 				C3A0D1151D662040005919E4 /* SignInWithTwitterFunction.m in Sources */,
 				C3A0D1121D661F6A005919E4 /* SignInWithGithubFunction.m in Sources */,
 				C3073AE41BE2C77C00EC89B7 /* FirebaseAuth.m in Sources */,
+				C3A0D1231D6626C2005919E4 /* LinkWithGoogleFunction.m in Sources */,
 				C3F757401D5E3A7300C4A244 /* SignInWithEmailFunction.m in Sources */,
+				C3A0D1201D6626C2005919E4 /* LinkWithEmailFunction.m in Sources */,
 				C3F757371D5E337600C4A244 /* SignOutFunction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

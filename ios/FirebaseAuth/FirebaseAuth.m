@@ -24,6 +24,11 @@
 #import "Functions/SignInWithTwitterFunction.h"
 #import "Functions/SignInWithGithubFunction.h"
 #import "Functions/SignInAnonymouslyFunction.h"
+#import "Functions/LinkWithFacebookFunction.h"
+#import "Functions/LinkWithGoogleFunction.h"
+#import "Functions/LinkWithEmailFunction.h"
+#import "Functions/LinkWithTwitterFunction.h"
+#import "Functions/LinkWithGithubFunction.h"
 
 static BOOL FirebaseAuthLogEnabled = NO;
 FREContext FirebaseAuthExtContext = nil;
@@ -78,6 +83,11 @@ FRENamedFunction airFirebaseAuthExtFunctions[] = {
     { (const uint8_t*) "signInWithTwitterAccount",   0, fba_signInWithTwitter },
     { (const uint8_t*) "signInWithGithubAccount",    0, fba_signInWithGithub },
     { (const uint8_t*) "signInAnonymously",          0, fba_signInAnonymously },
+    { (const uint8_t*) "linkWithFacebookAccount",    0, fba_linkWithFacebook },
+    { (const uint8_t*) "linkWithGoogleAccount",      0, fba_linkWithGoogle },
+    { (const uint8_t*) "linkWithEmailAndPassword",   0, fba_linkWithEmail },
+    { (const uint8_t*) "linkWithTwitterAccount",     0, fba_linkWithTwitter },
+    { (const uint8_t*) "linkWithGithubAccount",      0, fba_linkWithGithub },
     { (const uint8_t*) "signOut",                    0, fba_signOut }
 };
 

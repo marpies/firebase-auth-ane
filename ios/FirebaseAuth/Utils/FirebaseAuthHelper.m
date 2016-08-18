@@ -36,9 +36,7 @@
     return self;
 }
 
-- (FIRUser*) getUser {
-    return [FIRAuth auth].currentUser;
-}
+# pragma mark - Create user / Sign in
 
 - (void) createUserWithEmail:(NSString*) email password:(NSString *)password completion:(FIRAuthResultCallback) completion {
     [FirebaseAuth log:@"Creating new user with email and password"];
@@ -78,6 +76,42 @@
     FIRAuthCredential* credential = [FIRTwitterAuthProvider credentialWithToken:accessToken secret:secret];
     [[FIRAuth auth] signInWithCredential:credential completion:completion];
 }
+
+# pragma mark - Link / Unlink
+
+- (void) linkWithEmail:(nonnull NSString*) email password:(nonnull NSString *)password completion:(nullable FIRAuthResultCallback)completion {
+    [FirebaseAuth log:@"Linking with email and password"];
+    FIRAuthCredential* credential = [FIREmailPasswordAuthProvider credentialWithEmail:email password:password];
+    [self linkWithCredential:credential completion:completion];
+}
+
+- (void) linkWithGoogleAccount:(NSString*) idToken accessToken:(NSString*) accessToken completion:(FIRAuthResultCallback) completion {
+    [FirebaseAuth log:@"Linking with Google account"];
+    FIRAuthCredential* credential = [FIRGoogleAuthProvider credentialWithIDToken:idToken accessToken:accessToken];
+    [self linkWithCredential:credential completion:completion];
+}
+
+- (void) linkWithFacebookAccount:(NSString*) accessToken completion:(FIRAuthResultCallback) completion {
+    [FirebaseAuth log:@"Linking with Facebook account"];
+    FIRAuthCredential* credential = [FIRFacebookAuthProvider credentialWithAccessToken:accessToken];
+    [self linkWithCredential:credential completion:completion];
+}
+
+- (void) linkWithGithubAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion {
+    [FirebaseAuth log:@"Linking with Github account"];
+    FIRAuthCredential* credential = [FIRGitHubAuthProvider credentialWithToken:accessToken];
+    [self linkWithCredential:credential completion:completion];
+}
+
+- (void) linkWithTwitterAccount:(nonnull NSString*) accessToken secret:(nonnull NSString*) secret completion:(nullable FIRAuthResultCallback) completion {
+    [FirebaseAuth log:@"Linking with Twitter account"];
+    FIRAuthCredential* credential = [FIRTwitterAuthProvider credentialWithToken:accessToken secret:secret];
+    [self linkWithCredential:credential completion:completion];
+}
+
+
+# pragma mark - Misc
+
 - (BOOL) signOut {
     NSError *error;
     [[FIRAuth auth] signOut:&error];
@@ -85,6 +119,10 @@
         return YES;
     }
     return NO;
+}
+
+- (FIRUser*) getUser {
+    return [FIRAuth auth].currentUser;
 }
 
 - (void) processAuthResponse:(nullable FIRUser*) user error:(nullable NSError*) error callbackId:(int) callbackId {
@@ -136,6 +174,19 @@
     return nil;
 }
 
+- (void) linkWithCredential:(FIRAuthCredential*) credential completion:(nullable FIRAuthResultCallback)completion {
+    FIRUser* user = [self getUser];
+    if( user != nil ) {
+        [user linkWithCredential:credential completion:completion];
+    } else {
+        [FirebaseAuth log:@"Linking failed because user is not signed in."];
+        if( completion != nil ) {
+            completion( nil, [NSError errorWithDomain:@"com.marpies.ane.firebase.auth.error"
+                                                 code:1337
+                                             userInfo:@{ NSLocalizedDescriptionKey: @"Unable to link account, user is not signed in." }] );
+        }
+    }
+}
 
 - (void) addAuthListener {
     [[FIRAuth auth] addAuthStateDidChangeListener:^(FIRAuth * _Nonnull auth, FIRUser * _Nullable user) {
