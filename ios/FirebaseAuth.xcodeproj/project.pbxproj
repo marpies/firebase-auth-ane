@@ -10,6 +10,8 @@
 		C3073AE41BE2C77C00EC89B7 /* FirebaseAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = C3073AD71BE2C77C00EC89B7 /* FirebaseAuth.m */; };
 		C3073AE81BE2C77C00EC89B7 /* InitFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3073AE21BE2C77C00EC89B7 /* InitFunction.m */; };
 		C37509FA1C79388900516C15 /* AIRExtHelpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37509F91C79388900516C15 /* AIRExtHelpers.framework */; };
+		C3A0D1121D661F6A005919E4 /* SignInWithGithubFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D1111D661F6A005919E4 /* SignInWithGithubFunction.m */; };
+		C3A0D1151D662040005919E4 /* SignInWithTwitterFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D1141D662040005919E4 /* SignInWithTwitterFunction.m */; };
 		C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757281D5DCADF00C4A244 /* FirebaseAuthHelper.m */; };
 		C3F7572D1D5DCBB900C4A244 /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572A1D5DCBB900C4A244 /* FirebaseAuth.framework */; };
 		C3F7572E1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572B1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework */; };
@@ -41,6 +43,10 @@
 		C3073AE21BE2C77C00EC89B7 /* InitFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitFunction.m; sourceTree = "<group>"; };
 		C35331DE1B7BCE8A003A7521 /* libFirebaseAuth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFirebaseAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37509F91C79388900516C15 /* AIRExtHelpers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AIRExtHelpers.framework; sourceTree = "<group>"; };
+		C3A0D1101D661F6A005919E4 /* SignInWithGithubFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInWithGithubFunction.h; sourceTree = "<group>"; };
+		C3A0D1111D661F6A005919E4 /* SignInWithGithubFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInWithGithubFunction.m; sourceTree = "<group>"; };
+		C3A0D1131D662040005919E4 /* SignInWithTwitterFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInWithTwitterFunction.h; sourceTree = "<group>"; };
+		C3A0D1141D662040005919E4 /* SignInWithTwitterFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInWithTwitterFunction.m; sourceTree = "<group>"; };
 		C3F757271D5DCADF00C4A244 /* FirebaseAuthHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirebaseAuthHelper.h; path = Utils/FirebaseAuthHelper.h; sourceTree = "<group>"; };
 		C3F757281D5DCADF00C4A244 /* FirebaseAuthHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirebaseAuthHelper.m; path = Utils/FirebaseAuthHelper.m; sourceTree = "<group>"; };
 		C3F7572A1D5DCBB900C4A244 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = "<group>"; };
@@ -114,6 +120,10 @@
 				C3F7573F1D5E3A7300C4A244 /* SignInWithEmailFunction.m */,
 				C3F757411D5E3B4A00C4A244 /* SignInAnonymouslyFunction.h */,
 				C3F757421D5E3B4A00C4A244 /* SignInAnonymouslyFunction.m */,
+				C3A0D1101D661F6A005919E4 /* SignInWithGithubFunction.h */,
+				C3A0D1111D661F6A005919E4 /* SignInWithGithubFunction.m */,
+				C3A0D1131D662040005919E4 /* SignInWithTwitterFunction.h */,
+				C3A0D1141D662040005919E4 /* SignInWithTwitterFunction.m */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -224,6 +234,8 @@
 				C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */,
 				C3F7573A1D5E368900C4A244 /* SignInWithFacebookFunction.m in Sources */,
 				C3F7573D1D5E397F00C4A244 /* SignInWithGoogleFunction.m in Sources */,
+				C3A0D1151D662040005919E4 /* SignInWithTwitterFunction.m in Sources */,
+				C3A0D1121D661F6A005919E4 /* SignInWithGithubFunction.m in Sources */,
 				C3073AE41BE2C77C00EC89B7 /* FirebaseAuth.m in Sources */,
 				C3F757401D5E3A7300C4A244 /* SignInWithEmailFunction.m in Sources */,
 				C3F757371D5E337600C4A244 /* SignOutFunction.m in Sources */,

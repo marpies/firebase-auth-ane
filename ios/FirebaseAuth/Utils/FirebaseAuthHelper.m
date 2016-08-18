@@ -67,6 +67,17 @@
     [[FIRAuth auth] signInWithCredential:credential completion:completion];
 }
 
+- (void) signInWithGithubAccount:(NSString*) accessToken completion:(FIRAuthResultCallback) completion {
+    [FirebaseAuth log:@"Signing in with Github account"];
+    FIRAuthCredential* credential = [FIRGitHubAuthProvider credentialWithToken:accessToken];
+    [[FIRAuth auth] signInWithCredential:credential completion:completion];
+}
+
+- (void) signInWithTwitterAccount:(NSString*) accessToken secret:(NSString*) secret completion:(FIRAuthResultCallback) completion {
+    [FirebaseAuth log:@"Signing in with Twitter account"];
+    FIRAuthCredential* credential = [FIRTwitterAuthProvider credentialWithToken:accessToken secret:secret];
+    [[FIRAuth auth] signInWithCredential:credential completion:completion];
+}
 - (BOOL) signOut {
     NSError *error;
     [[FIRAuth auth] signOut:&error];
