@@ -109,6 +109,17 @@
     [self linkWithCredential:credential completion:completion];
 }
 
+- (void) unlinkFromProvider:(NSString*) providerId completion:(FIRAuthResultCallback) completion {
+    FIRUser* user = [self getUser];
+    if( user != nil ) {
+        [FirebaseAuth log:[NSString stringWithFormat:@"Unlinking from provider: %@", providerId]];
+        [user unlinkFromProvider:providerId completion:completion];
+    } else {
+        completion( nil, [NSError errorWithDomain:@"com.marpies.ane.firebase.auth.error"
+                                             code:1338
+                                         userInfo:@{ NSLocalizedDescriptionKey: @"Unable to unlink from provider, user is not signed in." }] );
+    }
+}
 
 # pragma mark - Misc
 
@@ -229,4 +240,5 @@
     }
     return [MPStringUtils getJSONString:json];
 }
+
 @end

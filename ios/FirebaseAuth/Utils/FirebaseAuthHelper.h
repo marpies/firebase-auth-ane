@@ -35,6 +35,8 @@
 - (void) linkWithFacebookAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
 - (void) linkWithGithubAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
 - (void) linkWithTwitterAccount:(nonnull NSString*) accessToken secret:(nonnull NSString*) secret completion:(nullable FIRAuthResultCallback) completion;
+- (void) unlinkFromProvider:(nonnull NSString*) providerId completion:(nonnull FIRAuthResultCallback)completion;
+
 - (BOOL) signOut;
 
 - (void) processAuthResponse:(nullable FIRUser*) user error:(nullable NSError*) error callbackId:(int) callbackId;

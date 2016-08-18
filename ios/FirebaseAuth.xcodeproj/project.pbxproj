@@ -17,6 +17,7 @@
 		C3A0D1221D6626C2005919E4 /* LinkWithGithubFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D11B1D6626C2005919E4 /* LinkWithGithubFunction.m */; };
 		C3A0D1231D6626C2005919E4 /* LinkWithGoogleFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D11D1D6626C2005919E4 /* LinkWithGoogleFunction.m */; };
 		C3A0D1241D6626C2005919E4 /* LinkWithTwitterFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D11F1D6626C2005919E4 /* LinkWithTwitterFunction.m */; };
+		C3A0D1271D662898005919E4 /* UnlinkFromProviderFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A0D1261D662898005919E4 /* UnlinkFromProviderFunction.m */; };
 		C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F757281D5DCADF00C4A244 /* FirebaseAuthHelper.m */; };
 		C3F7572D1D5DCBB900C4A244 /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572A1D5DCBB900C4A244 /* FirebaseAuth.framework */; };
 		C3F7572E1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7572B1D5DCBB900C4A244 /* GoogleNetworkingUtilities.framework */; };
@@ -62,6 +63,8 @@
 		C3A0D11D1D6626C2005919E4 /* LinkWithGoogleFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkWithGoogleFunction.m; sourceTree = "<group>"; };
 		C3A0D11E1D6626C2005919E4 /* LinkWithTwitterFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkWithTwitterFunction.h; sourceTree = "<group>"; };
 		C3A0D11F1D6626C2005919E4 /* LinkWithTwitterFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkWithTwitterFunction.m; sourceTree = "<group>"; };
+		C3A0D1251D662898005919E4 /* UnlinkFromProviderFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnlinkFromProviderFunction.h; sourceTree = "<group>"; };
+		C3A0D1261D662898005919E4 /* UnlinkFromProviderFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnlinkFromProviderFunction.m; sourceTree = "<group>"; };
 		C3F757271D5DCADF00C4A244 /* FirebaseAuthHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirebaseAuthHelper.h; path = Utils/FirebaseAuthHelper.h; sourceTree = "<group>"; };
 		C3F757281D5DCADF00C4A244 /* FirebaseAuthHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirebaseAuthHelper.m; path = Utils/FirebaseAuthHelper.m; sourceTree = "<group>"; };
 		C3F7572A1D5DCBB900C4A244 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				C3A0D1111D661F6A005919E4 /* SignInWithGithubFunction.m */,
 				C3A0D1131D662040005919E4 /* SignInWithTwitterFunction.h */,
 				C3A0D1141D662040005919E4 /* SignInWithTwitterFunction.m */,
+				C3A0D1251D662898005919E4 /* UnlinkFromProviderFunction.h */,
+				C3A0D1261D662898005919E4 /* UnlinkFromProviderFunction.m */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -259,6 +264,7 @@
 				C3F757291D5DCADF00C4A244 /* FirebaseAuthHelper.m in Sources */,
 				C3A0D1221D6626C2005919E4 /* LinkWithGithubFunction.m in Sources */,
 				C3A0D1211D6626C2005919E4 /* LinkWithFacebookFunction.m in Sources */,
+				C3A0D1271D662898005919E4 /* UnlinkFromProviderFunction.m in Sources */,
 				C3F7573A1D5E368900C4A244 /* SignInWithFacebookFunction.m in Sources */,
 				C3A0D1241D6626C2005919E4 /* LinkWithTwitterFunction.m in Sources */,
 				C3F7573D1D5E397F00C4A244 /* SignInWithGoogleFunction.m in Sources */,
