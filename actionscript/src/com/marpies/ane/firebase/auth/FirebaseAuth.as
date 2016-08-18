@@ -25,6 +25,9 @@ package com.marpies.ane.firebase.auth {
     import flash.system.Capabilities;
     import flash.utils.Dictionary;
 
+    /**
+     * Class providing APIs for the Firebase Authentication service.
+     */
     public class FirebaseAuth {
 
         private static const TAG:String = "[FirebaseAuth]";
@@ -144,6 +147,7 @@ package com.marpies.ane.firebase.auth {
          *          // there was an error singing the user in
          *      }
          * };
+         * </listing>
          */
         public static function signInAnonymously( callback:Function ):void {
             if( !isSupported ) return;
@@ -157,7 +161,8 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
-         * Attempts to sign the user in using email and password.
+         * Attempts to sign the user in using email and password. This is equivalent to calling
+         * <code>signInWithCredential</code> with an <code>EmailAuthCredential</code>.
          *
          * @param email User's email address.
          * @param password User's password.
@@ -170,25 +175,26 @@ package com.marpies.ane.firebase.auth {
          *          // there was an error singing the user in
          *      }
          * };
+         * </listing>
          */
         public static function signInWithEmailAndPassword( email:String, password:String, callback:Function ):void {
-            if( !isSupported ) return;
-            validateExtensionContext();
-
-            if( email === null ) throw new ArgumentError( "Parameter email cannot be null." );
-            if( password === null ) throw new ArgumentError( "Parameter password cannot be null." );
-            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
-
-            CONFIG::ane {
-                mContext.call( "signInWithEmailAndPassword", email, password, registerCallback( callback ) );
-            }
+            signInWithCredential( EmailAuthProvider.getCredential( email, password ), callback );
         }
 
         /**
-         * Attempts to sign the user in with Google's ID token and access token.
+         * Attempts to sign in a user with the given credential.
          *
-         * @param idToken User's ID token obtained from Google.
-         * @param accessToken User's access token obtained from Google.
+         * <p>Use this method to sign in a user into your Firebase Authentication system. First retrieve the
+         * credential either directly from the user, in case of <code>EmailAuthCredential</code>, or from a
+         * supported authentication SDK, such as Google Sign-In or Facebook.</p>
+         *
+         * <p>For all <code>IAuthCredential</code> types except <code>EmailAuthCredential</code>, this method
+         * will create an account for the user in the case that it didn't exist before.</p>
+         *
+         * <p><strong>Important:</strong> you must configure the authentication providers in the Firebase console
+         * before you can use them.</p>
+         *
+         * @param credential The credential to use to sign in a user.
          * @param callback Function with the following signature:
          * <listing version="3.0">
          * function callback( user:FirebaseUser, errorMessage:String ):void {
@@ -198,44 +204,91 @@ package com.marpies.ane.firebase.auth {
          *          // there was an error singing the user in
          *      }
          * };
+         * </listing>
+         *
+         * @see com.marpies.ane.firebase.auth.EmailAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.FacebookAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.GoogleAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.TwitterAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.GithubAuthProvider#getCredential()
          */
-        public static function signInWithGoogleAccount( idToken:String, accessToken:String, callback:Function ):void {
+        public static function signInWithCredential( credential:IAuthCredential, callback:Function ):void {
             if( !isSupported ) return;
             validateExtensionContext();
 
-            if( idToken === null ) throw new ArgumentError( "Parameter idToken cannot be null." );
-            if( accessToken === null ) throw new ArgumentError( "Parameter accessToken cannot be null." );
             if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+            if( credential === null ) throw new ArgumentError( "Parameter credential cannot be null." );
 
-            CONFIG::ane {
-                mContext.call( "signInWithGoogleAccount", idToken, accessToken, registerCallback( callback ) );
+            switch( credential.providerId ) {
+                case FirebaseAuthProviders.EMAIL:
+                    signInWithEmailCredential( credential as EmailAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.FACEBOOK:
+                    signInWithFacebookCredential( credential as FacebookAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.GOOGLE:
+                    signInWithGoogleCredential( credential as GoogleAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.TWITTER:
+                    signInWithTwitterCredential( credential as TwitterAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.GITHUB:
+                    signInWithGithubCredential( credential as GithubAuthCredential, callback );
+                    return;
+                default:
+                    throw new ArgumentError( "Encountered credential for unknown provider: " + credential.providerId );
             }
         }
 
         /**
-         * Attempts to sign the user in with Facebook's access token.
+         * Attaches the given <code>IAuthCredential</code> to the user.
+         * This allows the user to sign in to this account in the future with credentials for such provider.
          *
-         * @param accessToken User's access token obtained from Facebook.
+         * @param credential The credential to link the current user with.
          * @param callback Function with the following signature:
          * <listing version="3.0">
          * function callback( user:FirebaseUser, errorMessage:String ):void {
          *      if( errorMessage == null ) {
-         *          // user has been signed in
+         *          // user has been linked with the credential
          *      } else {
-         *          // there was an error singing the user in
+         *          // there was an error linking the user with the credential
          *      }
          * };
+         * </listing>
+         *
+         * @see com.marpies.ane.firebase.auth.EmailAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.FacebookAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.GoogleAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.TwitterAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.GithubAuthProvider#getCredential()
          */
-        public static function signInWithFacebookAccount( accessToken:String, callback:Function ):void {
+        public static function linkWithCredential( credential:IAuthCredential, callback:Function ):void {
             if( !isSupported ) return;
             validateExtensionContext();
 
-            if( accessToken === null ) throw new ArgumentError( "Parameter accessToken cannot be null." );
             if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+            if( credential === null ) throw new ArgumentError( "Parameter credential cannot be null." );
 
-            CONFIG::ane {
-                mContext.call( "signInWithFacebookAccount", accessToken, registerCallback( callback ) );
+            switch( credential.providerId ) {
+                case FirebaseAuthProviders.EMAIL:
+                    linkWithEmailCredential( credential as EmailAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.FACEBOOK:
+                    linkWithFacebookCredential( credential as FacebookAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.GOOGLE:
+                    linkWithGoogleCredential( credential as GoogleAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.TWITTER:
+                    linkWithTwitterCredential( credential as TwitterAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.GITHUB:
+                    linkWithGithubCredential( credential as GithubAuthCredential, callback );
+                    return;
+                default:
+                    throw new ArgumentError( "Encountered credential for unknown provider: " + credential.providerId );
             }
+
         }
 
         /**
@@ -305,6 +358,98 @@ package com.marpies.ane.firebase.auth {
          *
          *
          */
+
+        /**
+         *
+         * SIGN IN WITH CREDENTIAL
+         *
+         */
+
+        private static function signInWithEmailCredential( credential:EmailAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid email credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "signInWithEmailAndPassword", credential.email, credential.password, registerCallback( callback ) );
+            }
+        }
+
+        private static function signInWithFacebookCredential( credential:FacebookAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Facebook credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "signInWithFacebookAccount", credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        private static function signInWithGoogleCredential( credential:GoogleAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Google credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "signInWithGoogleAccount", credential.idToken, credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        private static function signInWithTwitterCredential( credential:TwitterAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Twitter credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "signInWithTwitterAccount", credential.token, credential.secret, registerCallback( callback ) );
+            }
+        }
+
+        private static function signInWithGithubCredential( credential:GithubAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Github credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "signInWithGithubAccount", credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        /**
+         *
+         * LINK WITH CREDENTIAL
+         *
+         */
+
+        private static function linkWithEmailCredential( credential:EmailAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid email credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithEmailAndPassword", credential.email, credential.password, registerCallback( callback ) );
+            }
+        }
+
+        private static function linkWithFacebookCredential( credential:FacebookAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Facebook credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithFacebookAccount", credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        private static function linkWithGoogleCredential( credential:GoogleAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Google credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithGoogleAccount", credential.idToken, credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        private static function linkWithTwitterCredential( credential:TwitterAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Twitter credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithTwitterAccount", credential.token, credential.secret, registerCallback( callback ) );
+            }
+        }
+
+        private static function linkWithGithubCredential( credential:GithubAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Github credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "linkWithGithubAccount", credential.accessToken, registerCallback( callback ) );
+            }
+        }
 
         /**
          * Initializes extension context.
