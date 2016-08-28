@@ -25,6 +25,7 @@
 - (void) unlinkFromProvider:(nonnull NSString*) providerId completion:(nonnull FIRAuthResultCallback)completion;
 
 - (void) updateEmail:(nonnull NSString*) email completion:(nonnull FIRUserProfileChangeCallback) completion;
+- (void) reauthenticateWithCredential:(nonnull FIRAuthCredential*) credential completion:(nullable FIRUserProfileChangeCallback) completion;
 
 - (BOOL) signOut;
 

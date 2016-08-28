@@ -31,6 +31,11 @@
 #import "Functions/LinkWithGithubFunction.h"
 #import "Functions/UnlinkFromProviderFunction.h"
 #import "Functions/UpdateEmailFunction.h"
+#import "Functions/ReauthenticateWithEmailFunction.h"
+#import "Functions/ReauthenticateWithGithubFunction.h"
+#import "Functions/ReauthenticateWithGoogleFunction.h"
+#import "Functions/ReauthenticateWithTwitterFunction.h"
+#import "Functions/ReauthenticateWithFacebookFunction.h"
 
 static BOOL FirebaseAuthLogEnabled = NO;
 FREContext FirebaseAuthExtContext = nil;
@@ -90,6 +95,11 @@ FRENamedFunction airFirebaseAuthExtFunctions[] = {
     { (const uint8_t*) "linkWithEmailAndPassword",   0, fba_linkWithEmail },
     { (const uint8_t*) "linkWithTwitterAccount",     0, fba_linkWithTwitter },
     { (const uint8_t*) "linkWithGithubAccount",      0, fba_linkWithGithub },
+    { (const uint8_t*) "reauthWithFacebookAccount",  0, fba_reauthWithFacebook },
+    { (const uint8_t*) "reauthWithGoogleAccount",    0, fba_reauthWithGoogle },
+    { (const uint8_t*) "reauthWithEmailAndPassword", 0, fba_reauthWithEmail },
+    { (const uint8_t*) "reauthWithTwitterAccount",   0, fba_reauthWithTwitter },
+    { (const uint8_t*) "reauthWithGithubAccount",    0, fba_reauthWithGithub },
     { (const uint8_t*) "unlinkFromProvider",         0, fba_unlinkFromProvider },
     { (const uint8_t*) "updateEmail",                0, fba_updateEmail },
     { (const uint8_t*) "signOut",                    0, fba_signOut }

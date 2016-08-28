@@ -76,6 +76,17 @@
     }
 }
 
+- (void) reauthenticateWithCredential:(FIRAuthCredential*) credential completion:(nullable FIRUserProfileChangeCallback) completion {
+    FIRUser* user = [self getUser];
+    if( user != nil ) {
+        [user reauthenticateWithCredential:credential completion:completion];
+    } else {
+        completion( [NSError errorWithDomain:@"com.marpies.ane.firebase.auth.error"
+                                        code:1400
+                                    userInfo:@{ NSLocalizedDescriptionKey: @"Unable to reauthenticate user, user is not signed in." }] );
+    }
+}
+
 # pragma mark - Misc
 
 - (BOOL) signOut {
