@@ -44,6 +44,9 @@ package com.marpies.ane.firebase.auth {
         private static const SIGN_IN_SUCCESS:String = "signInSuccess";
         private static const AUTH_STATE_SIGN_IN:String = "authStateSignIn";
         private static const AUTH_STATE_SIGN_OFF:String = "authStateSignOff";
+        private static const FBA_PROFILE_CHANGE_SUCCESS:String = "profileChangeSuccess";
+        private static const FBA_PROFILE_CHANGE_ERROR:String = "profileChangeError";
+
 
         /* Callbacks */
         private static var mCallbackMap:Dictionary;
@@ -381,6 +384,40 @@ package com.marpies.ane.firebase.auth {
         /**
          * @private
          */
+        internal static function reauthenticate( credential:IAuthCredential, callback:Function ):void {
+            switch( credential.providerId ) {
+                case FirebaseAuthProviders.EMAIL:
+                    reauthenticateWithEmailCredential( credential as EmailAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.FACEBOOK:
+                    reauthenticateWithFacebookCredential( credential as FacebookAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.GOOGLE:
+                    reauthenticateWithGoogleCredential( credential as GoogleAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.TWITTER:
+                    reauthenticateWithTwitterCredential( credential as TwitterAuthCredential, callback );
+                    return;
+                case FirebaseAuthProviders.GITHUB:
+                    reauthenticateWithGithubCredential( credential as GithubAuthCredential, callback );
+                    return;
+                default:
+                    throw new ArgumentError( "Encountered credential for unknown provider: " + credential.providerId );
+            }
+        }
+
+        /**
+         * @private
+         */
+        internal static function updateEmail( email:String, callback:Function ):void {
+            CONFIG::ane {
+                mContext.call( "updateEmail", email, registerCallback( callback ) );
+            }
+        }
+
+        /**
+         * @private
+         */
         internal static function validateExtensionContext():void {
             CONFIG::ane {
                 if( !mContext ) throw new Error( "FirebaseAuth extension was not initialized. Call init() first." );
@@ -442,6 +479,52 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
+         *
+         * REAUTHENTICATE WITH CREDENTIAL
+         *
+         */
+
+        private static function reauthenticateWithEmailCredential( credential:EmailAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid email credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "reauthWithEmailAndPassword", credential.email, credential.password, registerCallback( callback ) );
+            }
+        }
+
+        private static function reauthenticateWithFacebookCredential( credential:FacebookAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Facebook credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "reauthWithFacebookAccount", credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        private static function reauthenticateWithGoogleCredential( credential:GoogleAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Google credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "reauthWithGoogleAccount", credential.idToken, credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        private static function reauthenticateWithTwitterCredential( credential:TwitterAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Twitter credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "reauthWithTwitterAccount", credential.token, credential.secret, registerCallback( callback ) );
+            }
+        }
+
+        private static function reauthenticateWithGithubCredential( credential:GithubAuthCredential, callback:Function ):void {
+            if( credential === null ) throw new ArgumentError( "Invalid Github credential provided." );
+
+            CONFIG::ane {
+                mContext.call( "reauthWithGithubAccount", credential.accessToken, registerCallback( callback ) );
+            }
+        }
+
+        /**
          * Initializes extension context.
          * @return <code>true</code> if initialized successfully, <code>false</code> otherwise.
          */
@@ -490,28 +573,22 @@ package com.marpies.ane.firebase.auth {
 
         private static function onStatus( event:StatusEvent ):void {
             var json:Object = null;
-            var callbackId:int = -1;
             var callback:Function = null;
             switch( event.code ) {
                 case SIGN_IN_SUCCESS:
                     json = JSON.parse( event.level );
                     mFirebaseUser = FirebaseUser.fromJSON( json.user );
-                    callbackId = json.callbackId;
-                    callback = getCallback( callbackId );
+                    callback = getCallbackFromJSON( json );
                     if( callback !== null ) {
-                        unregisterCallback( callbackId );
                         callback( mFirebaseUser, null );
                     }
                     return;
 
                 case SIGN_IN_ERROR:
                     json = JSON.parse( event.level );
-                    var errorMessage:String = json.errorMessage;
-                    callbackId = json.listenerID;
-                    callback = getCallback( callbackId );
+                    callback = getCallbackFromJSON( json );
                     if( callback !== null ) {
-                        unregisterCallback( callbackId );
-                        callback( null, errorMessage );
+                        callback( null, json.errorMessage );
                     }
                     return;
 
@@ -528,7 +605,41 @@ package com.marpies.ane.firebase.auth {
                 case AUTH_STATE_SIGN_OFF:
                     mFirebaseUser = null;
                     return;
+
+                case FBA_PROFILE_CHANGE_SUCCESS:
+                    callback = getCallback( int( event.level ) );
+                    if( callback !== null ) {
+                        callback( null );
+                    }
+                    return;
+
+                case FBA_PROFILE_CHANGE_ERROR:
+                    json = JSON.parse( event.level );
+                    callback = getCallbackFromJSON( json );
+                    if( callback !== null ) {
+                        callback( json.errorMessage );
+                    }
+                    return;
             }
+        }
+
+        /**
+         * Retrieves callback ID from JSON response and gets callback registered with that ID.
+         * If callback is found, it is removed from the callback map.
+         *
+         * @param json JSON response that is expected to contain callback ID.
+         * @return Callback registered for the ID found in the JSON, or <code>null</code> if no callback exists.
+         */
+        private static function getCallbackFromJSON( json:Object ):Function {
+            var callbackId:int = -1;
+            if( "callbackId" in json ) {
+                callbackId = json.callbackId;
+            } else if( "listenerID" in json ) {
+                callbackId = json.listenerID;
+            }
+            var callback:Function = getCallback( callbackId );
+            unregisterCallback( callbackId );
+            return callback;
         }
 
         private static function log( message:String ):void {

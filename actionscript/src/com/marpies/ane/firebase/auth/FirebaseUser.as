@@ -158,6 +158,72 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
+         * Updates the email address of the user.
+         *
+         * <p><strong>Important:</strong> this is a security sensitive operation that requires the user to have
+         * recently signed in. If this requirement isn't met, ask the user to authenticate again and later call
+         * <code>user.reauthenticate()</code>.</p>
+         *
+         * <p>In addition, note that the original email address recipient will receive an email that allows them to
+         * revoke the email address change, in order to protect them from account hijacking.</p>
+         *
+         * @param email The new user email address.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // email has been changed
+         *      } else {
+         *          // there was an error changing the email
+         *      }
+         * };
+         * </listing>
+         *
+         * @see #reauthenticate()
+         */
+        public function updateEmail( email:String, callback:Function ):void {
+            if( !FirebaseAuth.isSupported ) return;
+            FirebaseAuth.validateExtensionContext();
+
+            if( email === null ) throw new ArgumentError( "Parameter email cannot be null." );
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+
+            FirebaseAuth.updateEmail( email, callback );
+        }
+
+        /**
+         * Reauthenticates the user with the given credential. This is useful for operations that require a recent
+         * sign-in.
+         *
+         * @param credential The credential to reauthenticate the user with.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser, errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been reauthenticated
+         *      } else {
+         *          // there was an error reauthenticating the user
+         *      }
+         * };
+         * </listing>
+         *
+         * @see com.marpies.ane.firebase.auth.EmailAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.FacebookAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.GoogleAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.TwitterAuthProvider#getCredential()
+         * @see com.marpies.ane.firebase.auth.GithubAuthProvider#getCredential()
+         */
+        public function reauthenticate( credential:IAuthCredential, callback:Function ):void {
+            if( !FirebaseAuth.isSupported ) return;
+            FirebaseAuth.validateExtensionContext();
+
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+            if( credential === null ) throw new ArgumentError( "Parameter credential cannot be null." );
+
+            FirebaseAuth.reauthenticate( credential, callback );
+        }
+
+        /**
          *
          *
          * Getters / Setters
