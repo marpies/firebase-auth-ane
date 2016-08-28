@@ -37,8 +37,11 @@
 - (void) linkWithTwitterAccount:(nonnull NSString*) accessToken secret:(nonnull NSString*) secret completion:(nullable FIRAuthResultCallback) completion;
 - (void) unlinkFromProvider:(nonnull NSString*) providerId completion:(nonnull FIRAuthResultCallback)completion;
 
+- (void) updateEmail:(nonnull NSString*) email completion:(nonnull FIRUserProfileChangeCallback) completion;
+
 - (BOOL) signOut;
 
 - (void) processAuthResponse:(nullable FIRUser*) user error:(nullable NSError*) error callbackId:(int) callbackId;
+- (void) processProfileChangeResponse:(nullable NSError*) error callbackId:(int) callbackId;
 
 @end

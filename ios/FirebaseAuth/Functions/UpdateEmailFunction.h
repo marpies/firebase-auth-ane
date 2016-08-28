@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-#ifndef FirebaseAuthEvent_h
-#define FirebaseAuthEvent_h
+#import <AIRExtHelpers/FlashRuntimeExtensions.h>
 
-#import <Foundation/Foundation.h>
-
-static NSString* const FBA_SIGN_IN_ERROR = @"signInError";
-static NSString* const FBA_SIGN_IN_SUCCESS = @"signInSuccess";
-static NSString* const FBA_AUTH_STATE_SIGN_IN = @"authStateSignIn";
-static NSString* const FBA_AUTH_STATE_SIGN_OFF = @"authStateSignOff";
-
-static NSString* const FBA_PROFILE_CHANGE_SUCCESS = @"profileChangeSuccess";
-static NSString* const FBA_PROFILE_CHANGE_ERROR = @"profileChangeError";
-
-#endif /* FirebaseAuthEvent_h */
+FREObject fba_updateEmail( FREContext context, void* functionData, uint32_t argc, FREObject argv[] );

@@ -30,6 +30,7 @@
 #import "Functions/LinkWithTwitterFunction.h"
 #import "Functions/LinkWithGithubFunction.h"
 #import "Functions/UnlinkFromProviderFunction.h"
+#import "Functions/UpdateEmailFunction.h"
 
 static BOOL FirebaseAuthLogEnabled = NO;
 FREContext FirebaseAuthExtContext = nil;
@@ -90,6 +91,7 @@ FRENamedFunction airFirebaseAuthExtFunctions[] = {
     { (const uint8_t*) "linkWithTwitterAccount",     0, fba_linkWithTwitter },
     { (const uint8_t*) "linkWithGithubAccount",      0, fba_linkWithGithub },
     { (const uint8_t*) "unlinkFromProvider",         0, fba_unlinkFromProvider },
+    { (const uint8_t*) "updateEmail",                0, fba_updateEmail },
     { (const uint8_t*) "signOut",                    0, fba_signOut }
 };
 

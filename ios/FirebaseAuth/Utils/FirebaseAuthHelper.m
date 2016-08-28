@@ -121,6 +121,19 @@
     }
 }
 
+# pragma mark - User updates
+
+- (void) updateEmail:(NSString*) email completion:(FIRUserProfileChangeCallback) completion {
+    FIRUser* user = [self getUser];
+    if( user != nil ) {
+        [user updateEmail:email completion:completion];
+    } else {
+        completion( [NSError errorWithDomain:@"com.marpies.ane.firebase.auth.error"
+                                        code:1339
+                                    userInfo:@{ NSLocalizedDescriptionKey: @"Unable to update email, user is not signed in." }] );
+    }
+}
+
 # pragma mark - Misc
 
 - (BOOL) signOut {
@@ -156,6 +169,19 @@
     else {
         [FirebaseAuth log:[NSString stringWithFormat:@"Error authenticating user: %@", error.localizedDescription]];
         [FirebaseAuth dispatchEvent:FBA_SIGN_IN_ERROR withMessage:[MPStringUtils getEventErrorJSONString:callbackId errorMessage:error.localizedDescription]];
+    }
+}
+
+- (void) processProfileChangeResponse:(nullable NSError*) error callbackId:(int) callbackId {
+    /* Success */
+    if( error == nil ) {
+        [FirebaseAuth log:@"Successfully changed user profile"];
+        [FirebaseAuth dispatchEvent:FBA_PROFILE_CHANGE_SUCCESS withMessage:[NSString stringWithFormat:@"%i", callbackId]];
+    }
+    /* Error */
+    else {
+        [FirebaseAuth log:[NSString stringWithFormat:@"Error changing user profile: %@", error.localizedDescription]];
+        [FirebaseAuth dispatchEvent:FBA_PROFILE_CHANGE_ERROR withMessage:[MPStringUtils getEventErrorJSONString:callbackId errorMessage:error.localizedDescription]];
     }
 }
 
