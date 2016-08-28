@@ -17,13 +17,14 @@
 #import "SignInAnonymouslyFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_signInAnonymously( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_signInAnonymously"];
     int callbackId = [MPFREObjectUtils getInt:argv[0]];
     
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper signInAnonymouslyWithCompletion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

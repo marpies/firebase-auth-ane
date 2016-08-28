@@ -19,6 +19,7 @@
 #import "FirebaseAuthEvent.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
 #import <AIRExtHelpers/MPStringUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_createUser( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_createUser"];
@@ -27,7 +28,7 @@ FREObject fba_createUser( FREContext context, void* functionData, uint32_t argc,
     int callbackId = [MPFREObjectUtils getInt:argv[2]];
     
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper createUserWithEmail:email password:password completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    [[FIRAuth auth] createUserWithEmail:email password:password completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

@@ -17,6 +17,7 @@
 #import "SignInWithFacebookFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_signInWithFacebook( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_signInWithFacebook"];
@@ -24,7 +25,8 @@ FREObject fba_signInWithFacebook( FREContext context, void* functionData, uint32
     int callbackId = [MPFREObjectUtils getInt:argv[1]];
     
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper signInWithFacebookAccount:accessToken completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    FIRAuthCredential* credential = [FIRFacebookAuthProvider credentialWithAccessToken:accessToken];
+    [[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

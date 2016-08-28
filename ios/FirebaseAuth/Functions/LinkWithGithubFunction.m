@@ -17,14 +17,16 @@
 #import "LinkWithGithubFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_linkWithGithub( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_linkWithGithub"];
     NSString* accessToken = [MPFREObjectUtils getNSString:argv[0]];
     int callbackId = [MPFREObjectUtils getInt:argv[1]];
     
+    FIRAuthCredential* credential = [FIRGitHubAuthProvider credentialWithToken:accessToken];
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper linkWithGithubAccount:accessToken completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    [authHelper linkWithCredential:credential completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

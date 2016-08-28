@@ -17,6 +17,7 @@
 #import "SignInWithGoogleFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_signInWithGoogle( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_signInWithGoogle"];
@@ -25,7 +26,8 @@ FREObject fba_signInWithGoogle( FREContext context, void* functionData, uint32_t
     int callbackId = [MPFREObjectUtils getInt:argv[2]];
     
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper signInWithGoogleAccount:idToken accessToken:accessToken completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    FIRAuthCredential* credential = [FIRGoogleAuthProvider credentialWithIDToken:idToken accessToken:accessToken];
+    [[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

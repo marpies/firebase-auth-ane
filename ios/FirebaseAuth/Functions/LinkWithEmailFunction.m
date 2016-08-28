@@ -17,6 +17,7 @@
 #import "LinkWithEmailFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_linkWithEmail( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_linkWithEmail"];
@@ -24,8 +25,9 @@ FREObject fba_linkWithEmail( FREContext context, void* functionData, uint32_t ar
     NSString* password = [MPFREObjectUtils getNSString:argv[1]];
     int callbackId = [MPFREObjectUtils getInt:argv[2]];
     
+    FIRAuthCredential* credential = [FIREmailPasswordAuthProvider credentialWithEmail:email password:password];
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper linkWithEmail:email password:password completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    [authHelper linkWithCredential:credential completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

@@ -17,6 +17,7 @@
 #import "SignInWithEmailFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_signInWithEmail( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_signInWithEmail"];
@@ -25,7 +26,7 @@ FREObject fba_signInWithEmail( FREContext context, void* functionData, uint32_t 
     int callbackId = [MPFREObjectUtils getInt:argv[2]];
     
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper signInWithEmail:email password:password completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    [[FIRAuth auth] signInWithEmail:email password:password completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

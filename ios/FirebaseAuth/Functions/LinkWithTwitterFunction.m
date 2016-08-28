@@ -17,6 +17,7 @@
 #import "LinkWithTwitterFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_linkWithTwitter( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_linkWithTwitter"];
@@ -24,8 +25,9 @@ FREObject fba_linkWithTwitter( FREContext context, void* functionData, uint32_t 
     NSString* secret = [MPFREObjectUtils getNSString:argv[1]];
     int callbackId = [MPFREObjectUtils getInt:argv[2]];
     
+    FIRAuthCredential* credential = [FIRTwitterAuthProvider credentialWithToken:token secret:secret];
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper linkWithTwitterAccount:token secret:secret completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    [authHelper linkWithCredential:credential completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     

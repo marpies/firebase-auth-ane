@@ -21,20 +21,7 @@
 
 - (nullable FIRUser*) getUser;
 
-- (void) createUserWithEmail:(nonnull NSString*) email password:(nonnull NSString *)password completion:(nullable FIRAuthResultCallback)completion;
-
-- (void) signInAnonymouslyWithCompletion:(nullable FIRAuthResultCallback) completion;
-- (void) signInWithEmail:(nonnull NSString*) email password:(nonnull NSString *)password completion:(nullable FIRAuthResultCallback)completion ;
-- (void) signInWithGoogleAccount:(nonnull NSString*) idToken accessToken:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
-- (void) signInWithFacebookAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
-- (void) signInWithGithubAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
-- (void) signInWithTwitterAccount:(nonnull NSString*) accessToken secret:(nonnull NSString*) secret completion:(nullable FIRAuthResultCallback) completion;
-
-- (void) linkWithEmail:(nonnull NSString*) email password:(nonnull NSString *)password completion:(nullable FIRAuthResultCallback)completion ;
-- (void) linkWithGoogleAccount:(nonnull NSString*) idToken accessToken:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
-- (void) linkWithFacebookAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
-- (void) linkWithGithubAccount:(nonnull NSString*) accessToken completion:(nullable FIRAuthResultCallback)completion;
-- (void) linkWithTwitterAccount:(nonnull NSString*) accessToken secret:(nonnull NSString*) secret completion:(nullable FIRAuthResultCallback) completion;
+- (void) linkWithCredential:(nonnull FIRAuthCredential*) credential completion:(nullable FIRAuthResultCallback)completion;
 - (void) unlinkFromProvider:(nonnull NSString*) providerId completion:(nonnull FIRAuthResultCallback)completion;
 
 - (void) updateEmail:(nonnull NSString*) email completion:(nonnull FIRUserProfileChangeCallback) completion;

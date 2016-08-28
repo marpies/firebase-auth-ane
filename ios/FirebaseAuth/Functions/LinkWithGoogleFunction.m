@@ -17,6 +17,7 @@
 #import "LinkWithGoogleFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_linkWithGoogle( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"FirebaseAuth::fba_linkWithGoogle"];
@@ -24,8 +25,9 @@ FREObject fba_linkWithGoogle( FREContext context, void* functionData, uint32_t a
     NSString* accessToken = [MPFREObjectUtils getNSString:argv[1]];
     int callbackId = [MPFREObjectUtils getInt:argv[2]];
     
+    FIRAuthCredential* credential = [FIRGoogleAuthProvider credentialWithIDToken:idToken accessToken:accessToken];
     FirebaseAuthHelper* authHelper = [[FirebaseAuth sharedInstance] helper];
-    [authHelper linkWithGoogleAccount:idToken accessToken:accessToken completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+    [authHelper linkWithCredential:credential completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         [authHelper processAuthResponse:user error:error callbackId:callbackId];
     }];
     
