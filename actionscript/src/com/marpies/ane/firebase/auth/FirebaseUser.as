@@ -24,6 +24,8 @@ package com.marpies.ane.firebase.auth {
         private var mId:String;
         private var mIsAnonymous:Boolean;
         private var mDisplayName:String;
+        private var mEmail:String;
+        private var mPhotoURL:String;
         private var mProviderData:Vector.<FirebaseAuthProviderData>;
 
         /**
@@ -44,6 +46,8 @@ package com.marpies.ane.firebase.auth {
             user.mId = json.uid;
             user.mIsAnonymous = json.isAnonymous;
             user.mDisplayName = json.displayName;
+            user.mEmail = json.email;
+            user.mPhotoURL = json.photoURL;
             var providerDataArray:Array = null;
             if( "providerData" in json ) {
                 if( json.providerData is String ) {
@@ -181,6 +185,17 @@ package com.marpies.ane.firebase.auth {
          */
         public function get displayName():String {
             return mDisplayName;
+        }
+
+        /**
+         *
+         */
+        public function get email():String {
+            return mEmail;
+        }
+
+        public function get photoURL():String {
+            return mPhotoURL;
         }
 
         /**

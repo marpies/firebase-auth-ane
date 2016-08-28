@@ -170,6 +170,12 @@
         if( user.displayName != nil ) {
             json[@"displayName"] = user.displayName;
         }
+        if( user.email != nil ) {
+            json[@"email"] = user.email;
+        }
+        if( user.photoURL != nil ) {
+            json[@"photoURL"] = user.photoURL;
+        }
         NSMutableArray* providerData = [NSMutableArray array];
         for( id<FIRUserInfo> userInfo in user.providerData ) {
             NSString* userInfoJSON = [self getJSONFromUserInfo:userInfo];
