@@ -424,6 +424,18 @@ package com.marpies.ane.firebase.auth {
             }
         }
 
+        /**
+         * @private
+         */
+        internal static function changeUserProfile( displayName:String, photoURL:String, callback:Function ):void {
+            CONFIG::ane {
+                mContext.call( "changeUserProfile", displayName, photoURL, registerCallback( callback ) );
+            }
+        }
+
+        /**
+         * @private
+         */
         internal static function validateExtensionContext():void {
             CONFIG::ane {
                 if( !mContext ) throw new Error( "FirebaseAuth extension was not initialized. Call init() first." );

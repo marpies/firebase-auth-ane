@@ -285,14 +285,34 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
+         * Returns the main email address of the user, as stored in the Firebase project's user database.
+         * Unlike the email property from instances of <code>FirebaseAuthProviderData</code> corresponding to
+         * authentication providers (like Github), which is not modifiable, this email address can be updated at
+         * any time by calling <code>user.updateEmail()</code>.
          *
+         * @see #updateEmail()
          */
         public function get email():String {
             return mEmail;
         }
 
+        /**
+         * Returns the URL of this user's main profile picture, as stored in the Firebase project's user database.
+         * Unlike the email property from instances of <code>FirebaseAuthProviderData</code> corresponding to
+         * authentication providers (like Facebook), which is not modifiable, this URL can be updated at
+         * any time by using <code>user.updateProfileRequest</code>.
+         *
+         * @see #updateProfileRequest
+         */
         public function get photoURL():String {
             return mPhotoURL;
+        }
+
+        /**
+         * Returns object that can be used to construct a request to update user's profile.
+         */
+        public function get updateProfileRequest():FirebaseUserProfileUpdateRequest {
+            return new FirebaseUserProfileUpdateRequest();
         }
 
         /**
