@@ -76,6 +76,17 @@
     }
 }
 
+- (void) updatePassword:(NSString*) email completion:(FIRUserProfileChangeCallback) completion {
+    FIRUser* user = [self getUser];
+    if( user != nil ) {
+        [user updatePassword:email completion:completion];
+    } else {
+        completion( [NSError errorWithDomain:@"com.marpies.ane.firebase.auth.error"
+                                        code:1401
+                                    userInfo:@{ NSLocalizedDescriptionKey: @"Unable to update password, user is not signed in." }] );
+    }
+}
+
 - (void) reauthenticateWithCredential:(FIRAuthCredential*) credential completion:(nullable FIRUserProfileChangeCallback) completion {
     FIRUser* user = [self getUser];
     if( user != nil ) {
