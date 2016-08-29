@@ -436,6 +436,15 @@ package com.marpies.ane.firebase.auth {
         /**
          * @private
          */
+        internal static function deleteUser( callback:Function ):void {
+            CONFIG::ane {
+                mContext.call( "deleteUser", registerCallback( callback ) );
+            }
+        }
+
+        /**
+         * @private
+         */
         internal static function validateExtensionContext():void {
             CONFIG::ane {
                 if( !mContext ) throw new Error( "FirebaseAuth extension was not initialized. Call init() first." );

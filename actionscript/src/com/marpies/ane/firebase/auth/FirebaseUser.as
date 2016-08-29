@@ -255,6 +255,35 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
+         * Deletes the user record from your Firebase project's database. If the operation is successful,
+         * the user will be signed out.
+         *
+         * <p><strong>Important:</strong> this is a security sensitive operation that requires the user to have
+         * recently signed in. If this requirement isn't met, ask the user to authenticate again and later call
+         * <code>user.reauthenticate()</code>.</p>
+         *
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // user has been deleted
+         *      } else {
+         *          // there was an error deleting the user
+         *      }
+         * };
+         * </listing>
+         *
+         * @see #reauthenticate()
+         */
+        public function deleteUser( callback:Function ):void {
+            if( !FirebaseAuth.isSupported ) return;
+            FirebaseAuth.validateExtensionContext();
+
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+            FirebaseAuth.deleteUser( callback );
+        }
+
+        /**
          *
          *
          * Getters / Setters
