@@ -87,6 +87,17 @@
     }
 }
 
+- (void) deleteUserWithCompletion:(FIRUserProfileChangeCallback) completion {
+    FIRUser* user = [self getUser];
+    if( user != nil ) {
+        [user deleteWithCompletion:completion];
+    } else {
+        completion( [NSError errorWithDomain:@"com.marpies.ane.firebase.auth.error"
+                                        code:1402
+                                    userInfo:@{ NSLocalizedDescriptionKey: @"Unable to delete user, user is not signed in." }] );
+    }
+}
+
 - (void) reauthenticateWithCredential:(FIRAuthCredential*) credential completion:(nullable FIRUserProfileChangeCallback) completion {
     FIRUser* user = [self getUser];
     if( user != nil ) {

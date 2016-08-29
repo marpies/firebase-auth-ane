@@ -26,6 +26,7 @@
 
 - (void) updateEmail:(nonnull NSString*) email completion:(nonnull FIRUserProfileChangeCallback) completion;
 - (void) updatePassword:(NSString*) email completion:(FIRUserProfileChangeCallback) completion;
+- (void) deleteUserWithCompletion:(FIRUserProfileChangeCallback) completion;
 - (void) reauthenticateWithCredential:(nonnull FIRAuthCredential*) credential completion:(nullable FIRUserProfileChangeCallback) completion;
 
 - (BOOL) signOut;

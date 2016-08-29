@@ -32,6 +32,7 @@
 #import "Functions/UnlinkFromProviderFunction.h"
 #import "Functions/UpdateEmailFunction.h"
 #import "Functions/UpdatePasswordFunction.h"
+#import "Functions/DeleteUserFunction.h"
 #import "Functions/ReauthenticateWithEmailFunction.h"
 #import "Functions/ReauthenticateWithGithubFunction.h"
 #import "Functions/ReauthenticateWithGoogleFunction.h"
@@ -104,6 +105,7 @@ FRENamedFunction airFirebaseAuthExtFunctions[] = {
     { (const uint8_t*) "unlinkFromProvider",         0, fba_unlinkFromProvider },
     { (const uint8_t*) "updateEmail",                0, fba_updateEmail },
     { (const uint8_t*) "updatePassword",             0, fba_updatePassword },
+    { (const uint8_t*) "deleteUser",                 0, fba_deleteUser },
     { (const uint8_t*) "signOut",                    0, fba_signOut }
 };
 
