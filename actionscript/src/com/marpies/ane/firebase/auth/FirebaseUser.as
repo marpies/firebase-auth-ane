@@ -192,6 +192,37 @@ package com.marpies.ane.firebase.auth {
         }
 
         /**
+         * Updates the password of the user.
+         *
+         * <p><strong>Important:</strong> this is a security sensitive operation that requires the user to have
+         * recently signed in. If this requirement isn't met, ask the user to authenticate again and later call
+         * <code>user.reauthenticate()</code>.</p>
+         *
+         * @param password The new user password.
+         * @param callback Function with the following signature:
+         * <listing version="3.0">
+         * function callback( errorMessage:String ):void {
+         *      if( errorMessage == null ) {
+         *          // password has been changed
+         *      } else {
+         *          // there was an error changing the password
+         *      }
+         * };
+         * </listing>
+         *
+         * @see #reauthenticate()
+         */
+        public function updatePassword( password:String, callback:Function ):void {
+            if( !FirebaseAuth.isSupported ) return;
+            FirebaseAuth.validateExtensionContext();
+
+            if( password === null ) throw new ArgumentError( "Parameter email cannot be null." );
+            if( callback === null ) throw new ArgumentError( "Parameter callback cannot be null." );
+
+            FirebaseAuth.updatePassword( password, callback );
+        }
+
+        /**
          * Reauthenticates the user with the given credential. This is useful for operations that require a recent
          * sign-in.
          *

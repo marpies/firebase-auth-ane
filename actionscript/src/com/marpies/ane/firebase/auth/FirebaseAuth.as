@@ -418,6 +418,12 @@ package com.marpies.ane.firebase.auth {
         /**
          * @private
          */
+        internal static function updatePassword( password:String, callback:Function ):void {
+            CONFIG::ane {
+                mContext.call( "updatePassword", password, registerCallback( callback ) );
+            }
+        }
+
         internal static function validateExtensionContext():void {
             CONFIG::ane {
                 if( !mContext ) throw new Error( "FirebaseAuth extension was not initialized. Call init() first." );
