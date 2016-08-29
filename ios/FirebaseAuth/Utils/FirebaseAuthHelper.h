@@ -25,8 +25,9 @@
 - (void) unlinkFromProvider:(nonnull NSString*) providerId completion:(nonnull FIRAuthResultCallback)completion;
 
 - (void) updateEmail:(nonnull NSString*) email completion:(nonnull FIRUserProfileChangeCallback) completion;
-- (void) updatePassword:(NSString*) email completion:(FIRUserProfileChangeCallback) completion;
-- (void) deleteUserWithCompletion:(FIRUserProfileChangeCallback) completion;
+- (void) updatePassword:(nonnull NSString*) email completion:(nonnull FIRUserProfileChangeCallback) completion;
+- (void) deleteUserWithCompletion:(nonnull FIRUserProfileChangeCallback) completion;
+- (void) updateUserProfile:(nullable NSString*) displayName photoURL:(nullable NSString*) photoURL completion:(nonnull FIRUserProfileChangeCallback) completion;
 - (void) reauthenticateWithCredential:(nonnull FIRAuthCredential*) credential completion:(nullable FIRUserProfileChangeCallback) completion;
 
 - (BOOL) signOut;

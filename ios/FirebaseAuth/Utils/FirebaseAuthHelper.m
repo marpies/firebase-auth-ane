@@ -98,6 +98,24 @@
     }
 }
 
+- (void) updateUserProfile:(NSString*) displayName photoURL:(NSString*) photoURL completion:(FIRUserProfileChangeCallback) completion {
+    FIRUser* user = [self getUser];
+    if( user != nil ) {
+        FIRUserProfileChangeRequest* request = [user profileChangeRequest];
+        if( displayName != nil ) {
+            [request setDisplayName:displayName];
+        }
+        if( photoURL != nil ) {
+            [request setPhotoURL:[NSURL URLWithString:photoURL]];
+        }
+        [request commitChangesWithCompletion:completion];
+    } else {
+        completion( [NSError errorWithDomain:@"com.marpies.ane.firebase.auth.error"
+                                        code:1403
+                                    userInfo:@{ NSLocalizedDescriptionKey: @"Unable to update profile, user is not signed in." }] );
+    }
+}
+
 - (void) reauthenticateWithCredential:(FIRAuthCredential*) credential completion:(nullable FIRUserProfileChangeCallback) completion {
     FIRUser* user = [self getUser];
     if( user != nil ) {
