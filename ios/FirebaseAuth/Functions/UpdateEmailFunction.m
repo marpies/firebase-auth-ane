@@ -17,7 +17,6 @@
 #import "UpdateEmailFunction.h"
 #import "FirebaseAuth.h"
 #import <AIRExtHelpers/MPFREObjectUtils.h>
-#import <FirebaseAuth/FirebaseAuth.h>
 
 FREObject fba_updateEmail( FREContext context, void* functionData, uint32_t argc, FREObject argv[] ) {
     [FirebaseAuth log:@"fba_updateEmail"];
