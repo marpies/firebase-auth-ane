@@ -31,6 +31,7 @@ public class FirebaseAuthExtensionContext extends FREContext {
 		Map<String, FREFunction> functions = new HashMap<String, FREFunction>();
 
 		functions.put( "init", new InitFunction() );
+		functions.put( "createUser", new CreateUserFunction() );
 
 		return functions;
 	}

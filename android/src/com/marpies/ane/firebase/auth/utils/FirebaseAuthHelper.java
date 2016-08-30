@@ -18,6 +18,8 @@ package com.marpies.ane.firebase.auth.utils;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -52,6 +54,25 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 		} else {
 			AIR.log( "No user is currently signed in" );
 			AIR.dispatchEvent( FirebaseAuthEvent.AUTH_STATE_SIGN_OFF );
+		}
+	}
+
+	public void processAuthResponse( @NonNull Task<AuthResult> task, int callbackId ) {
+		if( task.isSuccessful() ) {
+			JSONObject response = new JSONObject();
+			try {
+				response.put( "user", getJSONFromUser( task.getResult().getUser() ) );
+				response.put( "callbackId", callbackId );
+				AIR.dispatchEvent( FirebaseAuthEvent.SIGN_IN_SUCCESS, response.toString() );
+			} catch( JSONException e ) {
+				e.printStackTrace();
+				AIR.log( "User authentication success, but failed to create response" );
+				AIR.dispatchEvent( FirebaseAuthEvent.SIGN_IN_ERROR, StringUtils.getEventErrorJSON( callbackId, "Failed to create response." ) );
+			}
+		} else {
+			String errorMessage = (task.getException() != null) ? task.getException().getLocalizedMessage() : "Unknown error.";
+			AIR.log( "Error authenticating user: " + errorMessage );
+			AIR.dispatchEvent( FirebaseAuthEvent.SIGN_IN_ERROR, StringUtils.getEventErrorJSON( callbackId, errorMessage ) );
 		}
 	}
 
