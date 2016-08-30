@@ -24,8 +24,6 @@ import com.marpies.ane.firebase.auth.utils.AIR;
 
 public class BaseFunction implements FREFunction {
 
-	protected int mCallbackID;
-
 	@Override
 	public FREObject call( FREContext context, FREObject[] args ) {
 		AIR.setContext( (FirebaseAuthExtensionContext) context );
