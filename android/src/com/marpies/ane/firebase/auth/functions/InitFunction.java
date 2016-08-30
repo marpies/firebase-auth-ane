@@ -18,14 +18,21 @@ package com.marpies.ane.firebase.auth.functions;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
+import com.google.firebase.auth.FirebaseAuth;
 import com.marpies.ane.firebase.auth.utils.AIR;
 import com.marpies.ane.firebase.auth.utils.FREObjectUtils;
+import com.marpies.ane.firebase.auth.utils.FirebaseAuthHelper;
 
 public class InitFunction extends BaseFunction {
 
 	@Override
 	public FREObject call( FREContext context, FREObject[] args ) {
 		super.call( context, args );
+
+		boolean showLogs = FREObjectUtils.getBoolean( args[0] );
+		AIR.setLogEnabled( showLogs );
+		AIR.log( "FirebaseAuth::init" );
+		FirebaseAuth.getInstance().addAuthStateListener( FirebaseAuthHelper.getInstance() );
 
 		return null;
 	}
