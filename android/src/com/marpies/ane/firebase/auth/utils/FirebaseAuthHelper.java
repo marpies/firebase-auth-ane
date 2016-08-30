@@ -18,11 +18,9 @@ package com.marpies.ane.firebase.auth.utils;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
+import com.google.firebase.auth.*;
 import com.marpies.ane.firebase.auth.data.FirebaseAuthEvent;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +53,17 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 			AIR.log( "No user is currently signed in" );
 			AIR.dispatchEvent( FirebaseAuthEvent.AUTH_STATE_SIGN_OFF );
 		}
+	}
+
+	public void signInWithCredential( AuthCredential credential, final int callbackId ) {
+		FirebaseAuth.getInstance()
+				.signInWithCredential( credential )
+				.addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+					@Override
+					public void onComplete( @NonNull Task<AuthResult> task ) {
+						processAuthResponse( task, callbackId );
+					}
+				} );
 	}
 
 	public void processAuthResponse( @NonNull Task<AuthResult> task, int callbackId ) {
