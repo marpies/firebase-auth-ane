@@ -38,6 +38,11 @@ public class FirebaseAuthExtensionContext extends FREContext {
 		functions.put( "signInWithTwitterAccount", new SignInWithTwitterFunction() );
 		functions.put( "signInWithGithubAccount", new SignInWithGithubFunction() );
 		functions.put( "signInAnonymously", new SignInAnonymouslyFunction() );
+		functions.put( "linkWithFacebookAccount", new LinkWithFacebookFunction() );
+		functions.put( "linkWithGoogleAccount", new LinkWithGoogleFunction() );
+		functions.put( "linkWithEmailAccount", new LinkWithEmailFunction() );
+		functions.put( "linkWithTwitterAccount", new LinkWithTwitterFunction() );
+		functions.put( "linkWithGithubAccount", new LinkWithGithubFunction() );
 
 		return functions;
 	}

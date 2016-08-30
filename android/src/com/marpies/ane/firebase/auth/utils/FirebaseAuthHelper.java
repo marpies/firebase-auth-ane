@@ -66,6 +66,21 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 				} );
 	}
 
+	public void linkWithCredential( AuthCredential credential, final int callbackId ) {
+		FirebaseUser user = getUser();
+		if( user != null ) {
+			user.linkWithCredential( credential )
+					.addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+						@Override
+						public void onComplete( @NonNull Task<AuthResult> task ) {
+							processAuthResponse( task, callbackId );
+						}
+					} );
+		} else {
+			dispatchAuthErrorResponse( "Unable to link with provider, user is not signed in.", callbackId );
+		}
+	}
+
 	public void processAuthResponse( @NonNull Task<AuthResult> task, int callbackId ) {
 		if( task.isSuccessful() ) {
 			JSONObject response = new JSONObject();
@@ -76,13 +91,17 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 			} catch( JSONException e ) {
 				e.printStackTrace();
 				AIR.log( "User authentication success, but failed to create response" );
-				AIR.dispatchEvent( FirebaseAuthEvent.SIGN_IN_ERROR, StringUtils.getEventErrorJSON( callbackId, "Failed to create response." ) );
+				dispatchAuthErrorResponse( "Failed to create response.", callbackId );
 			}
 		} else {
 			String errorMessage = (task.getException() != null) ? task.getException().getLocalizedMessage() : "Unknown error.";
 			AIR.log( "Error authenticating user: " + errorMessage );
-			AIR.dispatchEvent( FirebaseAuthEvent.SIGN_IN_ERROR, StringUtils.getEventErrorJSON( callbackId, errorMessage ) );
+			dispatchAuthErrorResponse( errorMessage, callbackId );
 		}
+	}
+
+	private void dispatchAuthErrorResponse( String errorMessage, int callbackId ) {
+		AIR.dispatchEvent( FirebaseAuthEvent.SIGN_IN_ERROR, StringUtils.getEventErrorJSON( callbackId, errorMessage ) );
 	}
 
 	private String getJSONFromUser( FirebaseUser newUser ) {
