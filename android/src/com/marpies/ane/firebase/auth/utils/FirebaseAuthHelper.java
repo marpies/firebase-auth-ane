@@ -168,6 +168,21 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 		}
 	}
 
+	public void deleteUser( final int callbackId ) {
+		FirebaseUser user = getUser();
+		if( user != null ) {
+			user.delete()
+					.addOnCompleteListener( new OnCompleteListener<Void>() {
+						@Override
+						public void onComplete( @NonNull Task<Void> task ) {
+							processProfileChangeResponse( task, callbackId );
+						}
+					} );
+		} else {
+			dispatchProfileChangeErrorResponse( "Unable to delete user, user is not signed in.", callbackId );
+		}
+	}
+
 	/**
 	 *
 	 *
