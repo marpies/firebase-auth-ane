@@ -1,0 +1,33 @@
+<extension xmlns="http://ns.adobe.com/air/extension/20.0">
+  <id>com.marpies.ane.firebase.auth</id>
+  <versionNumber>1.0.0</versionNumber>
+  <platforms>
+    <platform name="iPhone-ARM">
+        <applicationDeployment>
+            <nativeLibrary>libFirebaseAuth.a</nativeLibrary>
+            <initializer>FirebaseAuthInitializer</initializer>
+            <finalizer>FirebaseAuthFinalizer</finalizer>
+        </applicationDeployment>
+    </platform>
+
+    <platform name="Android-ARM">
+        <applicationDeployment>
+            <nativeLibrary>libFirebaseAuth.jar</nativeLibrary>
+            <initializer>com.marpies.ane.firebase.auth.FirebaseAuthExtension</initializer>
+            <finalizer>com.marpies.ane.firebase.auth.FirebaseAuthExtension</finalizer>
+        </applicationDeployment>
+    </platform>
+
+    <platform name="Android-x86">
+        <applicationDeployment>
+            <nativeLibrary>libFirebaseAuth.jar</nativeLibrary>
+            <initializer>com.marpies.ane.firebase.auth.FirebaseAuthExtension</initializer>
+            <finalizer>com.marpies.ane.firebase.auth.FirebaseAuthExtension</finalizer>
+        </applicationDeployment>
+    </platform>
+
+    <platform name="default">
+        <applicationDeployment/>
+    </platform>
+  </platforms>
+</extension>
