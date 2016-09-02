@@ -52,6 +52,7 @@ public class FirebaseAuthExtensionContext extends FREContext {
 		functions.put( "updateEmail", new UpdateEmailFunction() );
 		functions.put( "updatePassword", new UpdatePasswordFunction() );
 		functions.put( "deleteUser", new DeleteUserFunction() );
+		functions.put( "changeUserProfile", new UpdateUserProfileFunction() );
 
 		return functions;
 	}

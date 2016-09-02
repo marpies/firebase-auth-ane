@@ -183,6 +183,28 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 		}
 	}
 
+	public void updateUserProfile( String displayName, String photoURL, final int callbackId ) {
+		FirebaseUser user = getUser();
+		if( user != null ) {
+			UserProfileChangeRequest.Builder request = new UserProfileChangeRequest.Builder();
+			if( displayName != null ) {
+				request.setDisplayName( displayName );
+			}
+			if( photoURL != null ) {
+				request.setPhotoUri( Uri.parse( photoURL ) );
+			}
+			user.updateProfile( request.build() )
+					.addOnCompleteListener( new OnCompleteListener<Void>() {
+						@Override
+						public void onComplete( @NonNull Task<Void> task ) {
+							processProfileChangeResponse( task, callbackId );
+						}
+					} );
+		} else {
+			dispatchProfileChangeErrorResponse( "Unable to update profile, user is not signed in.", callbackId );
+		}
+	}
+
 	/**
 	 *
 	 *
