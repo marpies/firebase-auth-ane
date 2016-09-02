@@ -51,6 +51,7 @@ package com.marpies.ane.firebase.auth {
         /* Callbacks */
         private static var mCallbackMap:Dictionary;
         private static var mCallbackIdCounter:int;
+        private static var mAuthStateCallback:Function;
 
         /* Misc */
         private static var mFirebaseUser:FirebaseUser;
@@ -76,12 +77,29 @@ package com.marpies.ane.firebase.auth {
         /**
          * Initializes extension context.
          *
+         * @param authStateCallback Function to be called shortly after the Firebase SDK is initialized. It is useful
+         * if you want to find out whether a user is currently logged in or not when your app is launched.
+         * The function is expected to have the following signature:
+         * <listing version="3.0">
+         * function callback( user:FirebaseUser ):void {
+         *      if( user == null ) {
+         *          // there is no user logged in
+         *      } else {
+         *          // user has logged in before
+         *      }
+         * };
+         * </listing>
          * @param showLogs Set to <code>true</code> to show extension log messages.
          *
          * @return <code>true</code> if the extension context was created, <code>false</code> otherwise
          */
-        public static function init( showLogs:Boolean = false ):Boolean {
-            if( !isSupported ) return false;
+        public static function init( authStateCallback:Function = null, showLogs:Boolean = false ):Boolean {
+            if( !isSupported ) {
+                if( authStateCallback !== null ) {
+                    authStateCallback( null );
+                }
+                return false;
+            }
             if( mInitialized ) return true;
 
             mLogEnabled = showLogs;
@@ -100,6 +118,7 @@ package com.marpies.ane.firebase.auth {
 
             /* Call init */
             CONFIG::ane {
+                mAuthStateCallback = authStateCallback;
                 mContext.call( "init", showLogs );
             }
 
@@ -269,6 +288,7 @@ package com.marpies.ane.firebase.auth {
             mFirebaseUser = null;
 
             CONFIG::ane {
+                mAuthStateCallback = null;
                 mContext.removeEventListener( StatusEvent.STATUS, onStatus );
                 mContext.dispose();
                 mContext = null;
@@ -630,10 +650,12 @@ package com.marpies.ane.firebase.auth {
                             mFirebaseUser = FirebaseUser.fromJSON( json );
                         }
                     }
+                    triggerAuthStateCallback();
                     return;
 
                 case AUTH_STATE_SIGN_OFF:
                     mFirebaseUser = null;
+                    triggerAuthStateCallback();
                     return;
 
                 case FBA_PROFILE_CHANGE_SUCCESS:
@@ -650,6 +672,13 @@ package com.marpies.ane.firebase.auth {
                         callback( json.errorMessage );
                     }
                     return;
+            }
+        }
+
+        private static function triggerAuthStateCallback():void {
+            if( mAuthStateCallback !== null ) {
+                mAuthStateCallback( mFirebaseUser );
+                mAuthStateCallback = null; // we only want the callback to be called once
             }
         }
 
