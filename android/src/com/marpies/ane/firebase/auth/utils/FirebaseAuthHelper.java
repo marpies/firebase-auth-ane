@@ -39,6 +39,14 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 
 	private FirebaseAuthHelper() { }
 
+	/**
+	 *
+	 *
+	 * Public API
+	 *
+	 *
+	 */
+
 	@Override
 	public void onAuthStateChanged( @NonNull FirebaseAuth firebaseAuth ) {
 		FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -114,6 +122,29 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 			dispatchAuthErrorResponse( errorMessage, callbackId );
 		}
 	}
+
+	public void unlinkFromProvider( String providerId, final int callbackId ) {
+		FirebaseUser user = getUser();
+		if( user != null ) {
+			user.unlink( providerId )
+					.addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+						@Override
+						public void onComplete( @NonNull Task<AuthResult> task ) {
+							processAuthResponse( task, callbackId );
+						}
+					} );
+		} else {
+			dispatchAuthErrorResponse( "Unable to unlink from provider, user is not signed in.", callbackId );
+		}
+	}
+
+	/**
+	 *
+	 *
+	 * Private API
+	 *
+	 *
+	 */
 
 	private void processProfileChangeResponse( @NonNull Task<Void> task, int callbackId ) {
 		if( task.isSuccessful() ) {
