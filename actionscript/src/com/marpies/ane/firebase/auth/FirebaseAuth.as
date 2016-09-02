@@ -285,6 +285,9 @@ package com.marpies.ane.firebase.auth {
          *
          */
 
+        /**
+         * Returns currently logged in user, or <code>null</code> if user is not logged in.
+         */
         public static function get currentUser():FirebaseUser {
             return mFirebaseUser;
         }
