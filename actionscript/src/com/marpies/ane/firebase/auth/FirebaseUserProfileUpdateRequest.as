@@ -9,6 +9,13 @@ package com.marpies.ane.firebase.auth {
         private var mPhotoURL:String;
 
         /**
+         * @private
+         */
+        public function FirebaseUserProfileUpdateRequest():void {
+
+        }
+
+        /**
          * Set's new user display name.
          */
         public function setDisplayName( value:String ):FirebaseUserProfileUpdateRequest {
