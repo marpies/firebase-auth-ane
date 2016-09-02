@@ -137,9 +137,9 @@ package com.marpies.ane.firebase.auth {
          * <listing version="3.0">
          * function callback( user:FirebaseUser, errorMessage:String ):void {
          *      if( errorMessage == null ) {
-         *          // user has been linked with the credential
+         *          // user has been unlinked from the provider
          *      } else {
-         *          // there was an error linking the user with the credential
+         *          // there was an error unlinking the user from the provider
          *      }
          * };
          * </listing>
