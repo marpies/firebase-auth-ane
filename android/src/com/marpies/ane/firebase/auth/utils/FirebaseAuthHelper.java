@@ -81,6 +81,21 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 		}
 	}
 
+	public void reauthenticateWithCredential( AuthCredential credential, final int callbackId ) {
+		FirebaseUser user = getUser();
+		if( user != null ) {
+			user.reauthenticate( credential )
+					.addOnCompleteListener( new OnCompleteListener<Void>() {
+						@Override
+						public void onComplete( @NonNull Task<Void> task ) {
+							processProfileChangeResponse( task, callbackId );
+						}
+					} );
+		} else {
+			dispatchProfileChangeErrorResponse( "Unable to reauthenticate user, user is not signed in.", callbackId );
+		}
+	}
+
 	public void processAuthResponse( @NonNull Task<AuthResult> task, int callbackId ) {
 		if( task.isSuccessful() ) {
 			JSONObject response = new JSONObject();
@@ -100,8 +115,22 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 		}
 	}
 
+	private void processProfileChangeResponse( @NonNull Task<Void> task, int callbackId ) {
+		if( task.isSuccessful() ) {
+			AIR.dispatchEvent( FirebaseAuthEvent.PROFILE_CHANGE_SUCCESS, String.valueOf( callbackId ) );
+		} else {
+			String errorMessage = (task.getException() != null) ? task.getException().getLocalizedMessage() : "Unknown error.";
+			AIR.log( "Error changing user profile: " + errorMessage );
+			dispatchProfileChangeErrorResponse( errorMessage, callbackId );
+		}
+	}
+
 	private void dispatchAuthErrorResponse( String errorMessage, int callbackId ) {
 		AIR.dispatchEvent( FirebaseAuthEvent.SIGN_IN_ERROR, StringUtils.getEventErrorJSON( callbackId, errorMessage ) );
+	}
+
+	private void dispatchProfileChangeErrorResponse( String errorMessage, int callbackId ) {
+		AIR.dispatchEvent( FirebaseAuthEvent.PROFILE_CHANGE_ERROR, StringUtils.getEventErrorJSON( callbackId, errorMessage ) );
 	}
 
 	private String getJSONFromUser( FirebaseUser newUser ) {
