@@ -49,6 +49,8 @@ public class FirebaseAuthExtensionContext extends FREContext {
 		functions.put( "reauthWithTwitterAccount", new ReauthenticateWithTwitterFunction() );
 		functions.put( "reauthWithGithubAccount", new ReauthenticateWithGithubFunction() );
 		functions.put( "unlinkFromProvider", new UnlinkFromProviderFunction() );
+		functions.put( "updateEmail", new UpdateEmailFunction() );
+		functions.put( "updatePassword", new UpdatePasswordFunction() );
 
 		return functions;
 	}

@@ -138,6 +138,36 @@ public class FirebaseAuthHelper implements FirebaseAuth.AuthStateListener {
 		}
 	}
 
+	public void updateEmail( String email, final int callbackId ) {
+		FirebaseUser user = getUser();
+		if( user != null ) {
+			user.updateEmail( email )
+					.addOnCompleteListener( new OnCompleteListener<Void>() {
+						@Override
+						public void onComplete( @NonNull Task<Void> task ) {
+							processProfileChangeResponse( task, callbackId );
+						}
+					} );
+		} else {
+			dispatchProfileChangeErrorResponse( "Unable to update email, user is not signed in.", callbackId );
+		}
+	}
+
+	public void updatePassword( String password, final int callbackId ) {
+		FirebaseUser user = getUser();
+		if( user != null ) {
+			user.updatePassword( password )
+					.addOnCompleteListener( new OnCompleteListener<Void>() {
+						@Override
+						public void onComplete( @NonNull Task<Void> task ) {
+							processProfileChangeResponse( task, callbackId );
+						}
+					} );
+		} else {
+			dispatchProfileChangeErrorResponse( "Unable to update password, user is not signed in.", callbackId );
+		}
+	}
+
 	/**
 	 *
 	 *
